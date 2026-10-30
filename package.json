@@ -5,9 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "postinstall": "node scripts/prisma-prepare.js",
+    "build": "node scripts/prisma-prepare.js && next build",
     "start": "next start",
     "lint": "eslint",
+    "prisma:prepare": "node scripts/prisma-prepare.js",
+    "prisma:prepare:pg": "node scripts/prisma-prepare.js --force-pg",
+    "prisma:prepare:sqlite": "node scripts/prisma-prepare.js --force-sqlite",
+    "db:push:pg": "prisma db push --schema=prisma/schema.postgresql.prisma",
+    "db:push:sqlite": "prisma db push --schema=prisma/schema.sqlite.prisma",
+    "db:export": "tsx scripts/export-sqlite-data.ts",
+    "db:import:pg": "tsx scripts/import-postgres-data.ts",
     "admin:provision": "tsx scripts/provision-admin.ts",
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force"

@@ -1,0 +1,242 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users & Auth ────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  phone         String?   @unique
+  passwordHash  String
+  role          String    @default("CUSTOMER") // "CUSTOMER" | "ADMIN"
+  emailVerified Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  profile       Profile?
+  addresses     Address[]
+  cart          Cart?
+  wishlist      Wishlist?
+  orders        Order[]
+
+  @@map("users")
+}
+
+model Profile {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  firstName   String?
+  lastName    String?
+  avatarUrl   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model Address {
+  id           String   @id @default(cuid())
+  userId       String
+  label        String   @default("Home")
+  fullName     String
+  phone        String
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  state        String
+  pincode      String
+  country      String   @default("India")
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders       Order[]
+
+  @@map("addresses")
+}
+
+// ─── Catalogue ────────────────────────────────────────────────────────────────
+
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  description String?
+  image       String?
+  icon        String?
+  sortOrder   Int       @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products    Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  sku            String?  @unique
+  name           String
+  description    String
+  categoryId     String
+  subCategory    String?
+  price          Int      // stored in paise (INR × 100)
+  originalPrice  Int      // MRP in paise
+  discount       Int      // percentage
+  rating         Float    @default(0)
+  reviewCount    Int      @default(0)
+  images         String   // JSON array of image URLs
+  features       String   // JSON array
+  specifications String   // JSON object
+  badge          String?
+  featured       Boolean  @default(false)
+  isBundle       Boolean  @default(false)
+  isDemo         Boolean  @default(true)
+  isActive       Boolean  @default(true)
+  status         String   @default("published") // published | draft | archived
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  category             Category       @relation(fields: [categoryId], references: [id])
+  inventory            Inventory?
+  cartItems            CartItem[]
+  wishlistItems        WishlistItem[]
+  orderItems           OrderItem[]
+  bundleParentItems    BundleItem[]   @relation("BundleParent")
+  bundleComponentItems BundleItem[]   @relation("BundleComponent")
+
+  @@map("products")
+}
+
+model BundleItem {
+  id                 String   @id @default(cuid())
+  bundleProductId    String
+  componentProductId String
+  quantity           Int      @default(1)
+
+  bundleProduct      Product  @relation("BundleParent", fields: [bundleProductId], references: [id], onDelete: Cascade)
+  componentProduct   Product  @relation("BundleComponent", fields: [componentProductId], references: [id], onDelete: Cascade)
+
+  @@unique([bundleProductId, componentProductId])
+  @@map("bundle_items")
+}
+
+model Inventory {
+  id            String   @id @default(cuid())
+  productId     String   @unique
+  stockCount    Int      @default(0)
+  reserved      Int      @default(0)
+  lowStockAlert Int      @default(5)
+  updatedAt     DateTime @updatedAt
+
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("inventory")
+}
+
+// ─── Cart ─────────────────────────────────────────────────────────────────────
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  productId String
+  quantity  Int      @default(1)
+  addedAt   DateTime @default(now())
+
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@unique([cartId, productId])
+  @@map("cart_items")
+}
+
+// ─── Wishlist ─────────────────────────────────────────────────────────────────
+
+model Wishlist {
+  id        String         @id @default(cuid())
+  userId    String         @unique
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     WishlistItem[]
+
+  @@map("wishlists")
+}
+
+model WishlistItem {
+  id         String   @id @default(cuid())
+  wishlistId String
+  productId  String
+  addedAt    DateTime @default(now())
+
+  wishlist   Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@unique([wishlistId, productId])
+  @@map("wishlist_items")
+}
+
+// ─── Orders ───────────────────────────────────────────────────────────────────
+
+model Order {
+  id            String      @id @default(cuid())
+  orderNumber   String      @unique
+  userId        String
+  addressId     String?
+  status        String      @default("pending")
+  paymentStatus String      @default("pending")
+  subtotal      Int         // paise
+  shipping      Int         @default(0)
+  tax           Int         @default(0)
+  grandTotal    Int         // paise
+  notes         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  user            User        @relation(fields: [userId], references: [id])
+  shippingAddress Address?    @relation(fields: [addressId], references: [id])
+  items           OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  productId   String
+  productName String
+  price       Int      // paise snapshot
+  quantity    Int
+  createdAt   DateTime @default(now())
+
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+

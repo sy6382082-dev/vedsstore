@@ -3,6 +3,8 @@ import { requireAdmin } from '@/lib/admin';
 import { prisma } from '@/lib/db';
 import AdminDashboardClient from './AdminDashboardClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Admin Console | VED-HUB',
   description: 'Manage products, stock alerts, SKU inventory, and catalog status.',

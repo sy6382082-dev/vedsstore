@@ -228,7 +228,7 @@ export default function CheckoutPage() {
           }
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, [isAuthenticated]);
 
   // Verify Razorpay payment on server
@@ -340,15 +340,15 @@ export default function CheckoutPage() {
 
     const addressPayload = useNewAddress
       ? {
-          fullName: fullName.trim(),
-          phone: phone.replace(/\D/g, ''),
-          addressLine1: addressLine1.trim(),
-          addressLine2: addressLine2.trim() || undefined,
-          landmark: landmark.trim() || undefined,
-          city: city.trim(),
-          state: state.trim(),
-          pincode: pincode.trim(),
-        }
+        fullName: fullName.trim(),
+        phone: phone.replace(/\D/g, ''),
+        addressLine1: addressLine1.trim(),
+        addressLine2: addressLine2.trim() || undefined,
+        landmark: landmark.trim() || undefined,
+        city: city.trim(),
+        state: state.trim(),
+        pincode: pincode.trim(),
+      }
       : undefined;
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -657,11 +657,10 @@ export default function CheckoutPage() {
                         <label
                           key={addr.id}
                           onClick={() => setSelectedAddressId(addr.id)}
-                          className={`p-3.5 rounded-md border cursor-pointer transition-colors flex flex-col justify-between text-xs ${
-                            selectedAddressId === addr.id
+                          className={`p-3.5 rounded-md border cursor-pointer transition-colors flex flex-col justify-between text-xs ${selectedAddressId === addr.id
                               ? 'border-[#171717] bg-[#fafafa]'
                               : 'border-[#e5e5e5] hover:bg-[#fafafa]'
-                          }`}
+                            }`}
                         >
                           <div className="space-y-1">
                             <div className="flex items-center justify-between font-semibold text-[#171717]">
@@ -851,11 +850,10 @@ export default function CheckoutPage() {
                   {/* Option 1: Razorpay Online Payment */}
                   <label
                     onClick={() => setPaymentMethod('RAZORPAY')}
-                    className={`p-3.5 rounded-md border cursor-pointer transition-colors flex flex-col justify-between ${
-                      paymentMethod === 'RAZORPAY'
+                    className={`p-3.5 rounded-md border cursor-pointer transition-colors flex flex-col justify-between ${paymentMethod === 'RAZORPAY'
                         ? 'border-[#171717] bg-[#fafafa]'
                         : 'border-[#e5e5e5] hover:bg-[#fafafa]'
-                    }`}
+                      }`}
                   >
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
@@ -876,11 +874,10 @@ export default function CheckoutPage() {
                   {/* Option 2: Cash on Delivery */}
                   <label
                     onClick={() => setPaymentMethod('COD')}
-                    className={`p-3.5 rounded-md border cursor-pointer transition-colors flex flex-col justify-between ${
-                      paymentMethod === 'COD'
+                    className={`p-3.5 rounded-md border cursor-pointer transition-colors flex flex-col justify-between ${paymentMethod === 'COD'
                         ? 'border-[#171717] bg-[#fafafa]'
                         : 'border-[#e5e5e5] hover:bg-[#fafafa]'
-                    }`}
+                      }`}
                   >
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">

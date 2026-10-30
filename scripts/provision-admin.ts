@@ -16,8 +16,8 @@ async function main() {
       const rl = readline.createInterface({ input, output });
       try {
         if (!email) {
-          const emailInput = await rl.question('Admin email [default: admin@brother.in]: ');
-          email = (emailInput.trim() || 'admin@brother.in').toLowerCase();
+          const emailInput = await rl.question('Admin email [default: admin@ved-hub.in]: ');
+          email = (emailInput.trim() || 'admin@ved-hub.in').toLowerCase();
         }
         if (!rawPassword) {
           const passInput = await rl.question('Enter admin password (min 8 chars): ');
@@ -60,7 +60,7 @@ Or pass arguments with npm:
       emailVerified: true,
       profile: {
         create: {
-          firstName: 'Brother',
+          firstName: 'VED-HUB',
           lastName: 'Administrator',
         },
       },
