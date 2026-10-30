@@ -570,35 +570,35 @@ export default function AdminDashboardClient({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         {/* Top Header & Admin Role Badge */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="font-black text-2xl tracking-tight text-slate-900 dark:text-white">
-                <span className="text-[#0047BA] dark:text-blue-400">Brother</span> Store
+              <span className="font-extrabold text-2xl tracking-tight text-neutral-900">
+                VED-HUB
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/40 text-[#0047BA] dark:text-blue-300 text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1">
+              <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 border border-neutral-200">
                 <ShieldCheck className="w-3 h-3" /> Admin Console
               </span>
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Authorised Session: <strong className="text-slate-700 dark:text-slate-300">{adminUser.email}</strong> • Direct DB Persistence
+            <p className="text-xs text-neutral-500 mt-1">
+              Authorised Session: <strong className="text-neutral-800">{adminUser.email}</strong> • Direct DB Persistence
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 inline-flex items-center gap-1.5 transition-colors"
+              className="text-xs font-semibold px-3 py-2 rounded-lg border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50 inline-flex items-center gap-1.5 transition-colors"
             >
               <span>View Storefront</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
             {activeTab === 'products' && (
               <Button
-                variant="gold"
+                variant="primary"
                 size="sm"
                 onClick={handleOpenCreate}
-                className="font-bold flex items-center gap-1.5 shadow-sm text-xs"
+                className="font-bold flex items-center gap-1.5 shadow-sm text-xs bg-black text-white hover:bg-neutral-800"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add Product</span>
@@ -608,13 +608,13 @@ export default function AdminDashboardClient({
         </div>
 
         {/* Primary Tab Navigation */}
-        <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-2 border-b border-neutral-200 pb-2">
           <button
             onClick={() => setActiveTab('products')}
-            className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'products'
-                ? 'bg-[#0047BA] text-white shadow-sm'
-                : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                ? 'bg-black text-white'
+                : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
             }`}
           >
             <Package className="w-4 h-4" />
@@ -623,10 +623,10 @@ export default function AdminDashboardClient({
 
           <button
             onClick={() => setActiveTab('orders')}
-            className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'orders'
-                ? 'bg-[#0047BA] text-white shadow-sm'
-                : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                ? 'bg-black text-white'
+                : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
             }`}
           >
             <ShoppingBag className="w-4 h-4" />
@@ -796,8 +796,8 @@ export default function AdminDashboardClient({
                                       <span className="text-slate-400">No SKU</span>
                                     )}
                                     {p.isBundle && (
-                                      <span className="bg-blue-100 dark:bg-blue-900/60 text-[#0047BA] dark:text-blue-300 font-bold px-1 rounded">
-                                        Bundle (4-Pack)
+                                      <span className="bg-neutral-100 text-neutral-800 font-bold px-1 rounded border border-neutral-200">
+                                        Bundle
                                       </span>
                                     )}
                                   </div>
@@ -960,10 +960,10 @@ export default function AdminDashboardClient({
               </div>
 
               <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs col-span-2 sm:col-span-1">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#0047BA] dark:text-blue-400">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-600">
                   Total Revenue
                 </div>
-                <div className="text-2xl font-black text-[#0047BA] dark:text-blue-400 font-mono mt-1">
+                <div className="text-2xl font-black text-neutral-900 font-mono mt-1">
                   {formatPrice(orderMetrics.totalRevenue)}
                 </div>
                 <div className="text-[10px] text-slate-500 mt-1">Non-cancelled gross</div>
@@ -1322,7 +1322,7 @@ export default function AdminDashboardClient({
               </div>
               <div className="flex justify-between font-black text-slate-900 dark:text-white pt-1 border-t border-slate-200 dark:border-slate-700 text-sm">
                 <span>Grand Total:</span>
-                <span className="font-mono text-[#0047BA] dark:text-blue-400">
+                <span className="font-mono text-neutral-900">
                   {formatPrice(selectedOrderModal.grandTotal)}
                 </span>
               </div>
@@ -1342,7 +1342,7 @@ export default function AdminDashboardClient({
                 <div className="space-y-3 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-[#0047BA] dark:text-blue-400" />
+                      <ShieldCheck className="w-4 h-4 text-neutral-700" />
                       Payment & Gateway Verification
                     </span>
                     <span
@@ -1413,7 +1413,7 @@ export default function AdminDashboardClient({
 
                     <div>
                       <span className="text-[11px] text-slate-400">Authorized Order Amount</span>
-                      <p className="text-xs font-bold font-mono text-[#0047BA] dark:text-blue-400 mt-0.5">
+                      <p className="text-xs font-bold font-mono text-neutral-900 mt-0.5">
                         {formatPrice(selectedOrderModal.grandTotal)}
                       </p>
                     </div>
@@ -1555,8 +1555,8 @@ export default function AdminDashboardClient({
                   required
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
-                  placeholder="e.g. Brother BT5000C Cyan Ink Bottle"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/40"
+                  placeholder="e.g. Minimalist Watch or Leather Wallet"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-black"
                 />
               </div>
 
@@ -1569,7 +1569,7 @@ export default function AdminDashboardClient({
                     type="text"
                     value={formSku}
                     onChange={(e) => setFormSku(e.target.value)}
-                    placeholder="e.g. BRO-BT5000C"
+                    placeholder="e.g. VED-SKU-1001"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-mono outline-none focus:ring-2 focus:ring-blue-500/40"
                   />
                 </div>
@@ -1673,7 +1673,7 @@ export default function AdminDashboardClient({
                     type="text"
                     value={formImageUrl}
                     onChange={(e) => setFormImageUrl(e.target.value)}
-                    placeholder="https://... or /images/brother-ink-products.jpg"
+                    placeholder="https://... or /images/product.jpg"
                     className="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white outline-none font-mono text-[11px]"
                   />
                   <label className="px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer font-semibold flex items-center gap-1.5 shrink-0">

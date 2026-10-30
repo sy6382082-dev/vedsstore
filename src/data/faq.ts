@@ -6,77 +6,76 @@ export const faqItems: FAQItem[] = [
     category: 'Shipping',
     question: 'What are the delivery timelines across India?',
     answer:
-      'Standard deliveries typically take 2-4 business days for metro cities (Mumbai, Delhi NCR, Bengaluru, Hyderabad, Chennai, Kolkata, Pune) and 4-7 business days for non-metro and tier-2/3 regions. In this demo store, all orders are illustrative simulations.',
+      'Standard deliveries typically take 2-4 business days for metro cities (Mumbai, Delhi NCR, Bengaluru, Hyderabad, Chennai, Kolkata, Pune) and 4-7 business days for other regions. In this demo store, orders are simulated.',
   },
   {
     id: 'faq-2',
     category: 'Shipping',
-    question: 'Is shipping free on Brother Store?',
+    question: 'Is shipping free on VED-HUB?',
     answer:
-      'Yes, we offer completely Free Express Shipping on all orders of ₹499 and above. For orders below ₹499, a nominal flat shipping fee of ₹49 is applied at checkout.',
+      'Yes, we offer Free Express Shipping on all orders of ₹499 and above. For orders below ₹499, a nominal flat shipping fee of ₹49 is applied at checkout.',
   },
   {
     id: 'faq-3',
     category: 'Returns',
     question: 'What is your return and replacement policy?',
     answer:
-      'We provide a hassle-free 30-day return policy for unused products in their original packaging with tags intact. Printer ink bottles must remain factory sealed with holographic foil intact for returns. Handcrafted jewelry can be exchanged if sized incorrectly.',
+      'We provide a straightforward 30-day return policy for unused products in their original packaging with tags intact. Printer ink bottles must remain factory sealed with holographic foil intact for returns. Jewellery can be exchanged if sized incorrectly.',
   },
   {
     id: 'faq-4',
     category: 'Returns',
     question: 'How do refunds get processed?',
     answer:
-      'Once the returned package passes quality inspection at our fulfillment facility, refunds are credited back to the original payment method (UPI, Net Banking, Credit/Debit Card) within 3-5 business days. For Cash on Delivery orders, refunds are credited via NEFT/UPI transfer.',
+      'Once the returned item passes quality inspection, refunds are credited back to the original payment method within 3-5 business days.',
   },
   {
     id: 'faq-5',
     category: 'Products',
     question: 'Are printer ink bottles genuine OEM products?',
     answer:
-      'Yes, all Brother, Epson, Canon, and HP ink bottles catalogued in our store are 100% original OEM bottles with manufacturer hologram seals, unique QR verification, and full manufacturer warranty coverage.',
+      'Yes, all Brother, Epson, Canon, and HP ink bottles catalogued on VED-HUB are 100% original OEM bottles with manufacturer seals and genuine warranty coverage.',
   },
   {
     id: 'faq-6',
     category: 'Products',
-    question: 'How do I care for Kundan and brass jewelry?',
+    question: 'How do I care for bracelets and jewellery?',
     answer:
-      'To preserve the micron gold plating and Kundan luster, avoid direct contact with water, sweat, perfumes, and sanitizers. Store your pieces individually in airtight zip pouches or the velvet box provided, and wipe gently with a soft microfibre cloth after wearing.',
+      'To preserve finish and luster, avoid direct contact with water, sweat, perfumes, and sanitizers. Store pieces in airtight pouches when not in use.',
   },
   {
     id: 'faq-7',
     category: 'Payments',
     question: 'What payment options are supported?',
     answer:
-      'In our live roadmap (Phase 2), we support UPI (Google Pay, PhonePe, Paytm), RuPay / Visa / Mastercard credit and debit cards, Net Banking across 50+ banks, EMI options, and Cash on Delivery. Please note this Phase 1 build is a functional demo without actual monetary transactions.',
+      'VED-HUB supports UPI (Google Pay, PhonePe, Paytm), RuPay, Visa, Mastercard, Net Banking, and simulated test checkout in demonstration mode.',
   },
   {
     id: 'faq-8',
     category: 'Privacy',
     question: 'How is customer personal information handled?',
     answer:
-      'We adhere to the Digital Personal Data Protection (DPDP) Act of India. We do not sell or lease personal data. Customer contact information and order details are encrypted at rest with AES-256 and transmitted securely using SSL/TLS 1.3.',
+      'We adhere to the Digital Personal Data Protection principles. Customer data is encrypted and never sold or shared with unauthorised third parties.',
   },
   {
     id: 'faq-9',
     category: 'Contact',
     question: 'How can I get in touch with customer support?',
     answer:
-      'Our dedicated customer care team in Mumbai is available Monday to Saturday, 9:00 AM to 8:00 PM IST via email at support@brother.in, via phone at +91 98765 43210, or via the interactive contact form on our website.',
+      'Our customer care team is available Monday to Saturday, 9:00 AM to 8:00 PM IST via email at support@ved-hub.in, via phone at +91 98765 43210, or through our contact form.',
   },
   {
     id: 'faq-10',
     category: 'Terms',
     question: 'Are taxes included in the displayed product prices?',
     answer:
-      'All product prices displayed on Brother Store are inclusive of applicable Goods and Services Tax (GST). A clear tax breakdown (standard 18% GST estimate) is also presented on the cart summary page.',
+      'All product prices displayed on VED-HUB are inclusive of applicable Goods and Services Tax (GST). A clear tax breakdown is also shown in the order summary.',
   },
   {
     id: 'faq-11',
     category: 'Demo Store',
-    question: 'Why is there a Demo notice across the website?',
+    question: 'Why is there a demo notice on VED-HUB?',
     answer:
-      'Brother Store is currently operating in demonstration mode. All catalog pricing, inventory counts, reviews, and checkout operations are mock data created to showcase the user experience, design system, and technical architecture.',
+      'VED-HUB is currently showcasing this functional demonstration store. Catalog items, inventory counts, and checkout operations simulate a complete end-to-end shopping experience.',
   },
 ];
-

@@ -4,7 +4,7 @@ import { prisma } from '@/lib/db';
 import AdminDashboardClient from './AdminDashboardClient';
 
 export const metadata = {
-  title: 'Admin Console | Brother Store',
+  title: 'Admin Console | VED-HUB',
   description: 'Manage products, stock alerts, SKU inventory, and catalog status.',
 };
 

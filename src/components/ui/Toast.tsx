@@ -48,27 +48,25 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`pointer-events-auto flex items-center justify-between p-4 rounded-xl shadow-lg border text-sm transition-all duration-300 animate-slide-up ${
-              toast.type === 'success'
-                ? 'bg-emerald-50 border-emerald-200 text-emerald-900 dark:bg-emerald-950 dark:border-emerald-800 dark:text-emerald-100'
-                : toast.type === 'error'
-                ? 'bg-red-50 border-red-200 text-red-900 dark:bg-red-950 dark:border-red-800 dark:text-red-100'
-                : 'bg-navy-mid/95 backdrop-blur-md border-slate-700 text-white dark:bg-slate-900 dark:border-slate-800'
+            className={`pointer-events-auto flex items-center justify-between p-3.5 rounded-lg shadow-md text-xs font-medium transition-all ${
+              toast.type === 'error'
+                ? 'bg-[#171717] text-white border border-red-500'
+                : 'bg-[#171717] text-white border border-[#171717]'
             }`}
             role="status"
           >
-            <div className="flex items-center gap-3">
-              {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />}
-              {toast.type === 'error' && <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 shrink-0" />}
-              {toast.type === 'info' && <Info className="w-5 h-5 text-gold shrink-0" />}
-              <span className="font-medium leading-tight">{toast.message}</span>
+            <div className="flex items-center gap-2.5">
+              {toast.type === 'success' && <CheckCircle2 className="w-4 h-4 text-white shrink-0" />}
+              {toast.type === 'error' && <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />}
+              {toast.type === 'info' && <Info className="w-4 h-4 text-white shrink-0" />}
+              <span className="leading-tight">{toast.message}</span>
             </div>
             <button
               onClick={() => removeToast(toast.id)}
-              className="p-1 rounded-md hover:bg-black/10 dark:hover:bg-white/10 transition-colors ml-3"
+              className="p-1 rounded text-[#a3a3a3] hover:text-white transition-colors ml-3 cursor-pointer"
               aria-label="Close notification"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         ))}

@@ -7,7 +7,6 @@ import {
   Trash2,
   ArrowRight,
   ShieldCheck,
-  AlertTriangle,
   ChevronRight,
   Truck,
   RotateCcw,
@@ -32,47 +31,33 @@ export default function CartPage() {
 
   if (!isHydrated) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-20 flex items-center justify-center">
+      <div className="min-h-screen bg-white py-20 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 rounded-full border-2 border-amber-500 border-t-transparent animate-spin" />
-          <p className="text-xs text-slate-500 font-medium">Loading your shopping cart...</p>
+          <div className="w-6 h-6 rounded-full border-2 border-[#171717] border-t-transparent animate-spin" />
+          <p className="text-xs text-[#737373] font-medium">Loading your shopping cart…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8">
+    <div className="min-h-screen bg-white py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-          <Link href="/" className="hover:text-amber-500 transition-colors">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#737373]">
+          <Link href="/" className="hover:text-[#171717] transition-colors">
             Home
           </Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <span className="font-semibold text-slate-800 dark:text-slate-200">
+          <span className="font-medium text-[#171717]">
             Shopping Cart
           </span>
         </nav>
 
-        {/* Demo Notice Banner */}
-        <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between gap-3 text-amber-900 dark:text-amber-300 text-xs font-medium">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
-            <span>
-              📋 Demo Store: You can adjust quantities and simulate checkout. No actual bank charges will occur.
-            </span>
-          </div>
-          <span className="hidden sm:inline text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-500/20">
-            Phase 1
-          </span>
-        </div>
-
-        <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-3">
-            <ShoppingBag className="w-7 h-7 text-amber-500" />
-            Your Shopping Cart
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+        <div className="flex items-center justify-between pb-3 border-b border-[#e5e5e5]">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#171717] flex items-center gap-3">
+            <span>Your Shopping Cart</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[#f5f5f5] text-[#171717] border border-[#e5e5e5]">
               {totalItems} items
             </span>
           </h1>
@@ -80,29 +65,29 @@ export default function CartPage() {
           {items.length > 0 && (
             <button
               onClick={clearCart}
-              className="text-xs font-semibold text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:underline flex items-center gap-1"
+              className="text-xs text-[#737373] hover:text-[#171717] hover:underline flex items-center gap-1 cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              Clear Cart
+              <span>Clear Cart</span>
             </button>
           )}
         </div>
 
         {items.length === 0 ? (
           /* Empty Cart State */
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-12 sm:p-16 text-center border border-slate-200 dark:border-slate-800 shadow-sm space-y-4 max-w-lg mx-auto">
-            <div className="w-20 h-20 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 mx-auto flex items-center justify-center">
-              <ShoppingBag className="w-10 h-10" />
+          <div className="bg-[#fafafa] rounded-lg p-12 sm:p-16 text-center border border-[#e5e5e5] space-y-3 max-w-lg mx-auto">
+            <div className="w-12 h-12 rounded-full bg-white border border-[#e5e5e5] text-[#737373] mx-auto flex items-center justify-center">
+              <ShoppingBag className="w-6 h-6" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-              Your cart is completely empty
+            <h2 className="text-lg font-bold text-[#171717]">
+              Your cart is empty
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-              Explore our trending Brother ink refill bottles, handcrafted Kundan bangles, and bridal nail accessories to fill it up!
+            <p className="text-xs text-[#737373]">
+              Explore our catalog to find everyday essentials, accessories, and supplies.
             </p>
             <div className="pt-2">
               <Link href="/">
-                <Button variant="gold" size="md" className="font-bold">
+                <Button variant="primary" size="md">
                   Continue Shopping
                 </Button>
               </Link>
@@ -112,58 +97,55 @@ export default function CartPage() {
           /* Cart Grid: Items (Left) + Order Summary (Right) */
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Items Table */}
-            <div className="lg:col-span-8 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden divide-y divide-slate-100 dark:divide-slate-800">
+            <div className="lg:col-span-8 bg-white rounded-lg border border-[#e5e5e5] overflow-hidden divide-y divide-[#e5e5e5]">
               {items.map(({ product, quantity }) => (
-                <div key={product.id} className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+                <div key={product.id} className="p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
                   {/* Product Details */}
-                  <div className="flex gap-4 items-center">
+                  <div className="flex gap-3.5 items-center">
                     <img
                       src={product.images[0]}
                       alt={product.name}
-                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 shrink-0"
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-md object-cover bg-[#f5f5f5] border border-[#e5e5e5] shrink-0"
                     />
-                    <div className="space-y-1">
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-amber-600 dark:text-amber-400">
-                        {product.category.replace('-', ' ')}
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] uppercase font-medium tracking-wider text-[#737373]">
+                        {product.category?.replace('-', ' ')}
                       </span>
                       <Link
                         href={`/product/${product.id}`}
-                        className="block font-bold text-sm sm:text-base text-slate-900 dark:text-white hover:text-amber-500 transition-colors line-clamp-1"
+                        className="block font-medium text-sm text-[#171717] hover:underline line-clamp-1"
                       >
                         {product.name}
                       </Link>
                       <div className="flex items-center gap-2 text-xs">
-                        <span className="font-bold text-slate-900 dark:text-white">
+                        <span className="font-semibold text-[#171717]">
                           {formatPrice(product.price)}
                         </span>
                         {product.originalPrice > product.price && (
-                          <span className="text-slate-400 line-through">
+                          <span className="text-[#737373] line-through text-[11px]">
                             {formatPrice(product.originalPrice)}
                           </span>
                         )}
-                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-[11px]">
-                          In Stock
-                        </span>
                       </div>
                     </div>
                   </div>
 
                   {/* Quantity & Subtotal Controls */}
-                  <div className="flex items-center justify-between sm:justify-end gap-6 pt-2 sm:pt-0 border-t sm:border-0 border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center border border-slate-300 dark:border-slate-700 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800">
+                  <div className="flex items-center justify-between sm:justify-end gap-6 pt-2 sm:pt-0 border-t sm:border-0 border-[#f5f5f5]">
+                    <div className="flex items-center border border-[#e5e5e5] rounded bg-white">
                       <button
                         onClick={() => updateQuantity(product.id, quantity - 1)}
-                        className="px-3 py-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs"
+                        className="px-2.5 py-1 text-[#737373] hover:text-[#171717] hover:bg-[#f5f5f5] text-xs font-semibold"
                         aria-label="Decrease quantity"
                       >
                         -
                       </button>
-                      <span className="px-3 text-xs font-bold text-slate-900 dark:text-white">
+                      <span className="px-3 text-xs font-semibold text-[#171717]">
                         {quantity}
                       </span>
                       <button
                         onClick={() => updateQuantity(product.id, quantity + 1)}
-                        className="px-3 py-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs"
+                        className="px-2.5 py-1 text-[#737373] hover:text-[#171717] hover:bg-[#f5f5f5] text-xs font-semibold"
                         aria-label="Increase quantity"
                       >
                         +
@@ -171,12 +153,12 @@ export default function CartPage() {
                     </div>
 
                     <div className="text-right min-w-[80px]">
-                      <span className="block font-black text-sm sm:text-base text-slate-900 dark:text-white">
+                      <span className="block font-semibold text-sm text-[#171717]">
                         {formatPrice(product.price * quantity)}
                       </span>
                       <button
                         onClick={() => removeFromCart(product.id)}
-                        className="text-[11px] text-red-500 hover:underline mt-0.5 inline-flex items-center gap-1"
+                        className="text-[11px] text-[#737373] hover:text-[#171717] hover:underline mt-0.5 inline-flex items-center gap-1 cursor-pointer"
                       >
                         <Trash2 className="w-3 h-3" />
                         Remove
@@ -188,27 +170,27 @@ export default function CartPage() {
             </div>
 
             {/* Order Summary (Right) */}
-            <div className="lg:col-span-4 bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6 lg:sticky lg:top-24">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div className="lg:col-span-4 bg-[#fafafa] rounded-lg p-5 sm:p-6 border border-[#e5e5e5] space-y-5 lg:sticky lg:top-24">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-[#171717] pb-3 border-b border-[#e5e5e5]">
                 Order Summary
               </h2>
 
-              <div className="space-y-3 text-xs sm:text-sm">
-                <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                  <span>Cart Subtotal ({totalItems} items)</span>
-                  <span className="font-semibold text-slate-900 dark:text-white">
+              <div className="space-y-2.5 text-xs sm:text-sm">
+                <div className="flex justify-between text-[#737373]">
+                  <span>Subtotal ({totalItems} items)</span>
+                  <span className="font-medium text-[#171717]">
                     {formatPrice(subtotal)}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                <div className="flex justify-between text-[#737373]">
                   <span className="flex items-center gap-1.5">
-                    <Truck className="w-4 h-4 text-amber-500" />
-                    Express Shipping
+                    <Truck className="w-4 h-4 text-[#171717]" />
+                    Shipping
                   </span>
-                  <span className="font-semibold text-slate-900 dark:text-white">
+                  <span className="font-medium text-[#171717]">
                     {shipping === 0 ? (
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">FREE</span>
+                      <span className="font-semibold text-[#171717]">FREE</span>
                     ) : (
                       formatPrice(shipping)
                     )}
@@ -216,24 +198,24 @@ export default function CartPage() {
                 </div>
 
                 {subtotal < 499 && (
-                  <p className="text-[11px] text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 p-2 rounded-lg">
+                  <p className="text-[11px] text-[#737373] bg-white border border-[#e5e5e5] p-2 rounded">
                     Add {formatPrice(499 - subtotal)} more to qualify for <strong>FREE Delivery</strong>!
                   </p>
                 )}
 
-                <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                <div className="flex justify-between text-[#737373]">
                   <span>Estimated GST (18% inclusive)</span>
-                  <span className="font-medium text-slate-700 dark:text-slate-300">
+                  <span className="font-medium text-[#171717]">
                     {formatPrice(tax)}
                   </span>
                 </div>
 
-                <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-between items-baseline">
+                <div className="pt-3 border-t border-[#e5e5e5] flex justify-between items-baseline">
                   <div>
-                    <span className="text-base font-bold text-slate-900 dark:text-white">Grand Total</span>
-                    <span className="block text-[11px] text-slate-400">Inclusive of all taxes</span>
+                    <span className="text-sm font-semibold text-[#171717]">Total</span>
+                    <span className="block text-[11px] text-[#737373]">Inclusive of all taxes</span>
                   </div>
-                  <span className="text-2xl font-black text-slate-900 dark:text-white">
+                  <span className="text-xl font-bold text-[#171717]">
                     {formatPrice(grandTotal)}
                   </span>
                 </div>
@@ -241,23 +223,23 @@ export default function CartPage() {
 
               <Link href="/checkout" className="block w-full">
                 <Button
-                  variant="gold"
+                  variant="primary"
                   size="lg"
-                  className="w-full font-bold shadow-md"
+                  className="w-full font-medium text-xs h-10"
                 >
                   Proceed to Checkout
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
 
-              <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="space-y-1.5 pt-2 border-t border-[#e5e5e5] text-[11px] text-[#737373]">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>256-Bit SSL Encrypted Checkout</span>
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#171717] shrink-0" />
+                  <span>Secure SSL Checkout</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <RotateCcw className="w-4 h-4 text-amber-500 shrink-0" />
-                  <span>Hassle-Free 30-Day Money Back Guarantee</span>
+                  <RotateCcw className="w-3.5 h-3.5 text-[#171717] shrink-0" />
+                  <span>30-Day Return Guarantee</span>
                 </div>
               </div>
             </div>

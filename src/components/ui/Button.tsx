@@ -12,27 +12,27 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading = false, children, disabled, ...props }, ref) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]';
+      'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#171717] focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.99] cursor-pointer text-sm';
 
     const variants = {
       primary:
-        'bg-slate-900 text-white hover:bg-slate-800 dark:bg-gold dark:text-slate-950 dark:hover:bg-amber-400 focus-visible:ring-slate-900 dark:focus-visible:ring-gold shadow-sm',
+        'bg-[#171717] text-white hover:bg-black border border-[#171717]',
       secondary:
-        'bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700 focus-visible:ring-slate-400',
+        'bg-[#f5f5f5] text-[#171717] hover:bg-[#e5e5e5] border border-[#e5e5e5]',
       outline:
-        'border border-slate-300 dark:border-slate-700 bg-transparent text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-slate-400',
+        'border border-[#e5e5e5] bg-white text-[#171717] hover:bg-[#f5f5f5] hover:border-[#171717]',
       ghost:
-        'bg-transparent text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-slate-400',
+        'bg-transparent text-[#171717] hover:bg-[#f5f5f5]',
       gold:
-        'bg-amber-500 text-slate-950 font-semibold hover:bg-amber-400 shadow-md shadow-amber-500/20 focus-visible:ring-amber-500',
+        'bg-[#171717] text-white hover:bg-black border border-[#171717]',
       danger:
-        'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-600 shadow-sm',
+        'bg-[#171717] text-white hover:bg-red-700 border border-transparent',
     };
 
     const sizes = {
-      sm: 'h-9 px-3 text-xs gap-1.5',
-      md: 'h-11 px-5 text-sm gap-2',
-      lg: 'h-13 px-7 text-base gap-2.5',
+      sm: 'h-8 px-3 text-xs gap-1.5',
+      md: 'h-10 px-4 text-sm gap-2',
+      lg: 'h-11 px-6 text-sm gap-2.5',
     };
 
     return (

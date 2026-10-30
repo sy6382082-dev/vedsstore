@@ -60,85 +60,92 @@ export default function AddressesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8">
+    <div className="min-h-screen bg-white py-8">
       <div className="max-w-2xl mx-auto px-4 space-y-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/account" className="p-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
-              <ArrowLeft className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+            <Link href="/account" className="p-2 rounded-lg hover:bg-neutral-100 transition-colors">
+              <ArrowLeft className="w-4 h-4 text-neutral-600" />
             </Link>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white">My Addresses</h1>
+            <h1 className="text-xl font-bold text-neutral-900">My Addresses</h1>
           </div>
-          <Button variant="gold" size="sm" onClick={() => setShowForm(true)} className="text-xs font-bold">
+          <Button variant="primary" size="sm" onClick={() => setShowForm(true)} className="text-xs font-medium">
             <Plus className="w-3.5 h-3.5 mr-1" /> Add New
           </Button>
         </div>
 
         {toast && (
-          <div className={`flex gap-2 p-3 rounded-xl border text-xs ${toast.type === 'success' ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300' : 'bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300'}`}>
-            {toast.type === 'success' ? <CheckCircle className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
+          <div className={`flex gap-2 p-3 rounded-lg border text-xs ${toast.type === 'success' ? 'bg-neutral-100 border-neutral-300 text-neutral-900' : 'bg-red-50 border-red-200 text-red-700'}`}>
+            {toast.type === 'success' ? <CheckCircle className="w-4 h-4 shrink-0 text-neutral-900" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
             {toast.msg}
           </div>
         )}
 
-        {loading ? <div className="space-y-3">{[1,2].map(i => <div key={i} className="h-28 rounded-2xl skeleton" />)}</div>
-          : addresses.length === 0 && !showForm ? (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-10 text-center space-y-3">
-              <MapPin className="w-10 h-10 text-slate-300 dark:text-slate-600 mx-auto" />
-              <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">No addresses saved</p>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {addresses.map((addr) => (
-                <div key={addr.id} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-slate-900 dark:text-white">{addr.label}</span>
-                        {addr.isDefault && <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 font-semibold flex items-center gap-1"><Star className="w-2.5 h-2.5" /> Default</span>}
-                      </div>
-                      <p className="text-xs text-slate-700 dark:text-slate-300 font-semibold">{addr.fullName}</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{addr.addressLine1}{addr.addressLine2 ? `, ${addr.addressLine2}` : ''}</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{addr.city}, {addr.state} — {addr.pincode}</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{addr.phone}</p>
+        {loading ? (
+          <div className="space-y-3">
+            {[1,2].map(i => <div key={i} className="h-28 rounded-xl skeleton" />)}
+          </div>
+        ) : addresses.length === 0 && !showForm ? (
+          <div className="bg-white rounded-xl border border-neutral-200 p-10 text-center space-y-3">
+            <MapPin className="w-10 h-10 text-neutral-300 mx-auto" />
+            <p className="text-sm font-semibold text-neutral-600">No addresses saved</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {addresses.map((addr) => (
+              <div key={addr.id} className="bg-white rounded-xl border border-neutral-200 p-5 shadow-xs">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-neutral-900">{addr.label}</span>
+                      {addr.isDefault && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 font-semibold flex items-center gap-1">
+                          <Star className="w-2.5 h-2.5" /> Default
+                        </span>
+                      )}
                     </div>
-                    <button onClick={() => handleDelete(addr.id)} className="p-1.5 text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-colors" aria-label="Delete address">
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    <p className="text-xs text-neutral-800 font-medium">{addr.fullName}</p>
+                    <p className="text-xs text-neutral-500">{addr.addressLine1}{addr.addressLine2 ? `, ${addr.addressLine2}` : ''}</p>
+                    <p className="text-xs text-neutral-500">{addr.city}, {addr.state} — {addr.pincode}</p>
+                    <p className="text-xs text-neutral-500">{addr.phone}</p>
                   </div>
+                  <button onClick={() => handleDelete(addr.id)} className="p-1.5 text-neutral-400 hover:text-red-600 hover:bg-neutral-50 rounded-lg transition-colors" aria-label="Delete address">
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
+        )}
 
         {showForm && (
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-amber-400 p-6 space-y-4">
-            <h3 className="font-bold text-slate-900 dark:text-white text-sm">Add New Address</h3>
+          <div className="bg-white rounded-xl border border-neutral-300 p-6 space-y-4 shadow-sm">
+            <h3 className="font-bold text-neutral-900 text-sm">Add New Address</h3>
             <form onSubmit={handleSave} className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 {[['label','Label (e.g. Home)'],['fullName','Full name *']].map(([k,ph]) => (
                   <div key={k}>
-                    <input value={form[k as keyof typeof form] as string} onChange={set(k)} placeholder={ph} required={k==='fullName'} className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all" />
+                    <input value={form[k as keyof typeof form] as string} onChange={set(k)} placeholder={ph} required={k==='fullName'} className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 focus:outline-none focus:border-black transition-all" />
                   </div>
                 ))}
               </div>
-              <input value={form.phone} onChange={set('phone')} placeholder="Mobile number *" required type="tel" className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all" />
-              <input value={form.addressLine1} onChange={set('addressLine1')} placeholder="Address line 1 *" required className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all" />
-              <input value={form.addressLine2} onChange={set('addressLine2')} placeholder="Address line 2 (optional)" className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all" />
+              <input value={form.phone} onChange={set('phone')} placeholder="Mobile number *" required type="tel" className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 focus:outline-none focus:border-black transition-all" />
+              <input value={form.addressLine1} onChange={set('addressLine1')} placeholder="Address line 1 *" required className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 focus:outline-none focus:border-black transition-all" />
+              <input value={form.addressLine2} onChange={set('addressLine2')} placeholder="Address line 2 (optional)" className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 focus:outline-none focus:border-black transition-all" />
               <div className="grid grid-cols-3 gap-3">
-                <input value={form.city} onChange={set('city')} placeholder="City *" required className="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all" />
-                <select value={form.state} onChange={set('state')} required className="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all">
+                <input value={form.city} onChange={set('city')} placeholder="City *" required className="px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 focus:outline-none focus:border-black transition-all" />
+                <select value={form.state} onChange={set('state')} required className="px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 focus:outline-none focus:border-black transition-all">
                   <option value="">State *</option>
                   {INDIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
-                <input value={form.pincode} onChange={set('pincode')} placeholder="Pincode *" required maxLength={6} pattern="\d{6}" className="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all" />
+                <input value={form.pincode} onChange={set('pincode')} placeholder="Pincode *" required maxLength={6} pattern="\d{6}" className="px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 focus:outline-none focus:border-black transition-all" />
               </div>
-              <label className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer">
-                <input type="checkbox" checked={form.isDefault} onChange={set('isDefault')} className="rounded" />
+              <label className="flex items-center gap-2 text-xs text-neutral-700 cursor-pointer">
+                <input type="checkbox" checked={form.isDefault} onChange={set('isDefault')} className="rounded border-neutral-300 text-black focus:ring-black" />
                 Set as default address
               </label>
-              <div className="flex gap-3">
-                <Button type="submit" variant="gold" className="flex-1 font-bold" disabled={saving}>{saving ? 'Saving…' : 'Save Address'}</Button>
+              <div className="flex gap-3 pt-2">
+                <Button type="submit" variant="primary" className="flex-1 font-medium" disabled={saving}>{saving ? 'Saving…' : 'Save Address'}</Button>
                 <Button type="button" variant="outline" onClick={() => { setShowForm(false); setForm(emptyForm); }}>Cancel</Button>
               </div>
             </form>
@@ -148,4 +155,3 @@ export default function AddressesPage() {
     </div>
   );
 }
-

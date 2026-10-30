@@ -9,10 +9,9 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { CartDrawer } from '@/components/modals/CartDrawer';
 import { CookieConsent } from '@/components/ui/CookieConsent';
-import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { BackToTop } from '@/components/ui/BackToTop';
 import { SkipToContent } from '@/components/ui/SkipToContent';
-import { FloatingContact } from '@/components/ui/FloatingContact';
+import { SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION } from '@/lib/constants';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -21,26 +20,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Brother Store | Printer Ink & Supplies',
-  description:
-    'Discover genuine Brother printer ink bottles, cartridges, handcrafted bracelets, and accessories at Brother Store.',
+  title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+  description: SITE_DESCRIPTION,
   keywords: [
-    'Brother Store',
+    'VED-HUB',
+    'ved-hub.in',
+    'Everyday essentials',
     'Printer Ink',
-    'Supplies',
-    'Brother ink bottles',
-    'BT5000C',
-    'BT5000M',
-    'BT5000Y',
-    'BTD60BK',
-    'bracelets',
-    'hand accessories',
+    'Cartridges',
+    'Bracelets',
+    'Hand accessories',
+    'Shopping India',
   ],
-  authors: [{ name: 'Brother Store Team' }],
+  authors: [{ name: 'VED-HUB Team' }],
   openGraph: {
-    title: 'Brother Store | Printer Ink & Supplies',
-    description: 'Discover genuine Brother printer ink bottles, cartridges, and supplies at Brother Store.',
-    siteName: 'Brother Store',
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    siteName: SITE_NAME,
     locale: 'en_IN',
     type: 'website',
   },
@@ -49,7 +45,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0f172a',
+  themeColor: '#171717',
 };
 
 export default function RootLayout({
@@ -59,24 +55,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <body className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased flex flex-col transition-colors duration-200">
+      <body className="min-h-screen bg-white text-[#171717] antialiased flex flex-col font-sans selection:bg-[#171717] selection:text-white">
         <ThemeProvider>
           <AuthProvider>
-          <CartProvider>
-            <ToastProvider>
-              <SkipToContent />
-              <ScrollProgress />
-              <Header />
-              <main id="main-content" className="flex-1">
-                {children}
-              </main>
-              <Footer />
-              <CartDrawer />
-              <FloatingContact />
-              <BackToTop />
-              <CookieConsent />
-            </ToastProvider>
-          </CartProvider>
+            <CartProvider>
+              <ToastProvider>
+                <SkipToContent />
+                <Header />
+                <main id="main-content" className="flex-1">
+                  {children}
+                </main>
+                <Footer />
+                <CartDrawer />
+                <BackToTop />
+                <CookieConsent />
+              </ToastProvider>
+            </CartProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

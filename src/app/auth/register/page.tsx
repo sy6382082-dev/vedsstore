@@ -3,10 +3,11 @@
 import React, { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Eye, EyeOff, Mail, Lock, User, Phone, AlertCircle, Info, CheckCircle } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, Phone, AlertCircle, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/Button';
 import { passwordStrength } from '@/lib/validation';
+import { SITE_NAME } from '@/lib/constants';
 
 const Field = ({ id, label, type = 'text', value, onChange, placeholder, icon: Icon, error: err, children }: {
   id: string; label: string; type?: string; value: string;
@@ -14,16 +15,16 @@ const Field = ({ id, label, type = 'text', value, onChange, placeholder, icon: I
   placeholder?: string; icon: React.ElementType; error?: string; children?: React.ReactNode;
 }) => (
   <div>
-    <label htmlFor={id} className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{label}</label>
+    <label htmlFor={id} className="block text-xs font-medium text-[#171717] mb-1">{label}</label>
     <div className="relative">
-      <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+      <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#737373] pointer-events-none" />
       <input
         id={id} type={type} value={value} onChange={onChange} placeholder={placeholder}
-        className={`w-full pl-10 ${children ? 'pr-11' : 'pr-4'} py-2.5 rounded-xl border ${err ? 'border-red-400 dark:border-red-600' : 'border-slate-300 dark:border-slate-700'} bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all`}
+        className={`w-full pl-9 ${children ? 'pr-10' : 'pr-3'} py-2 rounded-md border ${err ? 'border-red-400' : 'border-[#e5e5e5]'} bg-white text-xs text-[#171717] placeholder:text-[#737373] focus:border-[#171717] outline-none transition-colors`}
       />
       {children}
     </div>
-    {err && <p className="text-xs text-red-500 mt-1">{err}</p>}
+    {err && <p className="text-[11px] text-red-600 mt-1">{err}</p>}
   </div>
 );
 
@@ -41,7 +42,6 @@ function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   const strength = passwordStrength(form.password);
-  const strengthColor = { weak: 'bg-red-500', medium: 'bg-amber-500', strong: 'bg-emerald-500' }[strength];
   const strengthWidth = { weak: 'w-1/3', medium: 'w-2/3', strong: 'w-full' }[strength];
 
   const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -80,100 +80,92 @@ function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 py-10">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4 py-10">
       <div className="w-full max-w-md space-y-4">
-        <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-8 space-y-5">
-
-          {/* Logo */}
-          <div className="text-center space-y-2">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <span className="font-black text-3xl tracking-tighter text-[#0047BA] dark:text-blue-400 leading-none lowercase">
-                brother
+        <div className="bg-white rounded-lg border border-[#e5e5e5] p-6 sm:p-8 space-y-5">
+          {/* Logo & Headline */}
+          <div className="text-center space-y-1.5">
+            <Link href="/" className="inline-block">
+              <span className="font-bold text-2xl tracking-tight text-[#171717]">
+                {SITE_NAME}
               </span>
             </Link>
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Create your account</h1>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Free forever • No credit card needed</p>
-            </div>
-          </div>
-
-          <div className="flex gap-2 p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-xs text-blue-700 dark:text-blue-300">
-            <Info className="w-4 h-4 shrink-0 mt-0.5" />
-            <span><strong>Dev mode</strong> — account is created instantly. In production, email verification would be sent.</span>
+            <h1 className="text-xl font-bold text-[#171717]">Create your account</h1>
+            <p className="text-xs text-[#737373]">Fast, simple setup</p>
           </div>
 
           {error && (
-            <div className="flex gap-2 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300">
-              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />{error}
+            <div className="flex items-center gap-2 p-3 rounded-md bg-[#fafafa] border border-red-300 text-xs text-red-600">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+          <form onSubmit={handleSubmit} className="space-y-3.5" noValidate>
             <div className="grid grid-cols-2 gap-3">
-              <Field id="firstName" label="First name *" value={form.firstName} onChange={set('firstName')} icon={User} placeholder="Priya" error={fieldErrors.firstName} />
-              <Field id="lastName" label="Last name" value={form.lastName} onChange={set('lastName')} icon={User} placeholder="Sharma" />
+              <Field id="firstName" label="First name *" value={form.firstName} onChange={set('firstName')} icon={User} placeholder="First name" error={fieldErrors.firstName} />
+              <Field id="lastName" label="Last name" value={form.lastName} onChange={set('lastName')} icon={User} placeholder="Last name" />
             </div>
 
             <Field id="email" label="Email address *" type="email" value={form.email} onChange={set('email')} icon={Mail} placeholder="you@example.com" error={fieldErrors.email} />
 
-            <Field id="phone" label="Mobile number (optional)" type="tel" value={form.phone} onChange={set('phone')} icon={Phone} placeholder="+91 98765 43210" error={fieldErrors.phone} />
+            <Field id="phone" label="Mobile number (optional)" type="tel" value={form.phone} onChange={set('phone')} icon={Phone} placeholder="9876543210" error={fieldErrors.phone} />
 
             <div>
-              <label htmlFor="password" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Password *</label>
+              <label htmlFor="password" className="block text-xs font-medium text-[#171717] mb-1">Password *</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#737373] pointer-events-none" />
                 <input
                   id="password" type={showPassword ? 'text' : 'password'} value={form.password}
                   onChange={set('password')} placeholder="Min 8 chars, uppercase, number"
-                  className={`w-full pl-10 pr-11 py-2.5 rounded-xl border ${fieldErrors.password ? 'border-red-400 dark:border-red-600' : 'border-slate-300 dark:border-slate-700'} bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all`}
+                  className={`w-full pl-9 pr-10 py-2 rounded-md border ${fieldErrors.password ? 'border-red-400' : 'border-[#e5e5e5]'} bg-white text-xs text-[#171717] placeholder:text-[#737373] focus:border-[#171717] outline-none transition-colors`}
                 />
-                <button type="button" onClick={() => setShowPassword((p) => !p)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-amber-500 transition-colors" aria-label="Toggle password">
+                <button type="button" onClick={() => setShowPassword((p) => !p)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#737373] hover:text-[#171717]" aria-label="Toggle password">
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {form.password && (
-                <div className="mt-2 space-y-1">
-                  <div className="h-1 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                    <div className={`h-full rounded-full transition-all ${strengthColor} ${strengthWidth}`} />
+                <div className="mt-1.5 space-y-1">
+                  <div className="h-1 rounded bg-[#e5e5e5] overflow-hidden">
+                    <div className={`h-full bg-[#171717] transition-all ${strengthWidth}`} />
                   </div>
-                  <p className="text-xs text-slate-500 capitalize">Strength: <span className="font-semibold">{strength}</span></p>
+                  <p className="text-[11px] text-[#737373] capitalize">Strength: <span className="font-medium text-[#171717]">{strength}</span></p>
                 </div>
               )}
-              {fieldErrors.password && <p className="text-xs text-red-500 mt-1">{fieldErrors.password}</p>}
+              {fieldErrors.password && <p className="text-[11px] text-red-600 mt-1">{fieldErrors.password}</p>}
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Confirm password *</label>
+              <label htmlFor="confirmPassword" className="block text-xs font-medium text-[#171717] mb-1">Confirm password *</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#737373] pointer-events-none" />
                 <input
                   id="confirmPassword" type={showConfirm ? 'text' : 'password'} value={form.confirmPassword}
                   onChange={set('confirmPassword')} placeholder="Re-enter password"
-                  className={`w-full pl-10 pr-11 py-2.5 rounded-xl border ${fieldErrors.confirmPassword ? 'border-red-400 dark:border-red-600' : 'border-slate-300 dark:border-slate-700'} bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all`}
+                  className={`w-full pl-9 pr-10 py-2 rounded-md border ${fieldErrors.confirmPassword ? 'border-red-400' : 'border-[#e5e5e5]'} bg-white text-xs text-[#171717] placeholder:text-[#737373] focus:border-[#171717] outline-none transition-colors`}
                 />
-                <button type="button" onClick={() => setShowConfirm((p) => !p)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-amber-500 transition-colors" aria-label="Toggle confirm password">
+                <button type="button" onClick={() => setShowConfirm((p) => !p)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#737373] hover:text-[#171717]" aria-label="Toggle confirm password">
                   {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
                 {form.confirmPassword && form.password === form.confirmPassword && (
-                  <CheckCircle className="absolute right-10 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+                  <CheckCircle className="absolute right-9 top-1/2 -translate-y-1/2 w-4 h-4 text-[#171717]" />
                 )}
               </div>
-              {fieldErrors.confirmPassword && <p className="text-xs text-red-500 mt-1">{fieldErrors.confirmPassword}</p>}
+              {fieldErrors.confirmPassword && <p className="text-[11px] text-red-600 mt-1">{fieldErrors.confirmPassword}</p>}
             </div>
 
-            <Button type="submit" variant="gold" size="lg" className="w-full font-bold" disabled={isLoading}>
-              {isLoading ? 'Creating account…' : 'Create Account'}
+            <Button type="submit" variant="primary" size="md" isLoading={isLoading} className="w-full text-xs font-medium mt-1">
+              Create Account
             </Button>
           </form>
 
-          <p className="text-center text-xs text-slate-500 dark:text-slate-400">
+          <div className="pt-3 border-t border-[#e5e5e5] text-center text-xs text-[#737373]">
             Already have an account?{' '}
-            <Link href={`/auth/login${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ''}`} className="text-amber-600 dark:text-amber-400 font-semibold hover:underline">Sign in</Link>
-          </p>
+            <Link href={`/auth/login?redirect=${encodeURIComponent(redirect)}`} className="font-medium text-[#171717] hover:underline">
+              Sign in
+            </Link>
+          </div>
         </div>
-        <p className="text-center text-xs text-slate-400 dark:text-slate-600">
-          <Link href="/" className="hover:text-amber-500 transition-colors">← Back to store</Link>
-        </p>
       </div>
     </div>
   );
@@ -183,8 +175,8 @@ export default function RegisterPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500" />
+        <div className="min-h-screen bg-white flex items-center justify-center">
+          <div className="w-6 h-6 border-2 border-[#171717] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

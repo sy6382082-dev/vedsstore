@@ -1,21 +1,22 @@
-export const SITE_NAME = 'Brother Store';
-export const SITE_TAGLINE = 'Printer Ink & Supplies';
-export const SITE_DESCRIPTION = 'Discover genuine Brother printer ink bottles, cartridges, handcrafted bracelets, and accessories at Brother Store.';
+export const SITE_NAME = 'VED-HUB';
+export const SITE_DOMAIN = 'ved-hub.in';
+export const SITE_TAGLINE = 'Everything you need, simply.';
+export const SITE_DESCRIPTION = 'VED-HUB is your trusted destination for everyday essentials, printer supplies, handcrafted jewellery, and accessories — delivered simply and reliably.';
 
 export const FREE_SHIPPING_THRESHOLD = 499;
 export const STANDARD_SHIPPING_FEE = 49;
 export const GST_RATE = 0.18; // 18% GST
 
 export const CONTACT_PHONE = '+91 98765 43210';
-export const CONTACT_EMAIL = 'support@brother.in';
+export const CONTACT_EMAIL = 'support@ved-hub.in';
 export const CONTACT_HOURS = 'Mon - Sat: 9:00 AM - 8:00 PM IST';
-export const ADDRESS = 'Brother India Commerce Hub, Bandra Kurla Complex, Mumbai, Maharashtra 400051';
+export const ADDRESS = 'Commerce Hub, Bandra Kurla Complex, Mumbai, Maharashtra 400051';
 
 export const SOCIAL_LINKS = {
-  instagram: 'https://instagram.com/brotherstore_india',
-  twitter: 'https://twitter.com/brotherstore_india',
-  facebook: 'https://facebook.com/brotherstore_india',
-  youtube: 'https://youtube.com/brotherstore_india',
+  instagram: 'https://instagram.com/vedhub_in',
+  twitter: 'https://twitter.com/vedhub_in',
+  facebook: 'https://facebook.com/vedhub_in',
+  youtube: 'https://youtube.com/vedhub_in',
 };
 
-export const DEMO_NOTICE = '⚠️ Demo Store: All products, prices, stock counts, and transactions are purely illustrative for demonstration purposes. No real money or orders are processed.';
+export const DEMO_NOTICE = 'Demo Store: All products, prices, stock counts, and transactions are illustrative simulations. No real money or orders are processed.';

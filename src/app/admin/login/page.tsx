@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, ArrowLeft, Eye, EyeOff, LockKeyhole, Mail, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { Button } from '@/components/ui/Button';
+import { SITE_NAME } from '@/lib/constants';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -32,36 +32,37 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="relative flex min-h-[calc(100vh-8rem)] items-center justify-center overflow-hidden bg-slate-950 px-4 py-12">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-950 to-slate-950" />
-      <div className="relative w-full max-w-md">
+    <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center bg-white px-4 py-12">
+      <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-400/20 bg-blue-500/10 text-blue-300 shadow-lg shadow-blue-950/30">
-            <ShieldCheck className="h-7 w-7" aria-hidden="true" />
+          <Link href="/" className="inline-block mb-4">
+            <span className="font-extrabold text-2xl tracking-tight text-neutral-900">{SITE_NAME}</span>
+          </Link>
+          <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-100 text-neutral-800">
+            <ShieldCheck className="h-5 w-5" aria-hidden="true" />
           </div>
-          <p className="mb-2 text-xs font-bold uppercase tracking-[0.24em] text-blue-300">Brother Store</p>
-          <h1 className="text-3xl font-bold tracking-tight text-white">Admin sign in</h1>
-          <p className="mt-2 text-sm text-slate-400">Sign in with your administrator account to continue.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-neutral-900">Admin Sign In</h1>
+          <p className="mt-1.5 text-xs text-neutral-500">Sign in with your administrator credentials to access the console.</p>
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-black/30 backdrop-blur sm:p-8">
+        <div className="rounded-xl border border-neutral-200 bg-white p-6 sm:p-8 shadow-sm">
           {error && (
             <div
               role="alert"
-              className="mb-5 flex gap-2 rounded-xl border border-red-400/20 bg-red-500/10 p-3 text-sm text-red-200"
+              className="mb-5 flex gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700"
             >
-              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-500" aria-hidden="true" />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="admin-email" className="mb-2 block text-sm font-medium text-slate-200">
+              <label htmlFor="admin-email" className="mb-1.5 block text-xs font-semibold text-neutral-700">
                 Email address
               </label>
               <div className="relative">
-                <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+                <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" aria-hidden="true" />
                 <input
                   id="admin-email"
                   type="email"
@@ -71,17 +72,17 @@ export default function AdminLoginPage() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="admin@example.com"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950/70 py-3 pl-11 pr-4 text-sm text-white placeholder:text-slate-600 focus:border-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full rounded-lg border border-neutral-200 bg-white py-2.5 pl-10 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-black focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="admin-password" className="mb-2 block text-sm font-medium text-slate-200">
+              <label htmlFor="admin-password" className="mb-1.5 block text-xs font-semibold text-neutral-700">
                 Password
               </label>
               <div className="relative">
-                <LockKeyhole className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+                <LockKeyhole className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" aria-hidden="true" />
                 <input
                   id="admin-password"
                   type={showPassword ? 'text' : 'password'}
@@ -90,13 +91,13 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   placeholder="Enter your password"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950/70 py-3 pl-11 pr-12 text-sm text-white placeholder:text-slate-600 focus:border-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full rounded-lg border border-neutral-200 bg-white py-2.5 pl-10 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-black focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((visible) => !visible)}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors hover:text-slate-200"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700"
                 >
                   {showPassword
                     ? <EyeOff className="h-4 w-4" aria-hidden="true" />
@@ -106,35 +107,33 @@ export default function AdminLoginPage() {
               <div className="mt-2 text-right">
                 <Link
                   href="/auth/forgot-password"
-                  className="text-xs font-medium text-blue-300 transition-colors hover:text-blue-200"
+                  className="text-xs text-neutral-500 hover:text-black"
                 >
                   Forgot password?
                 </Link>
               </div>
             </div>
 
-            <Button
+            <button
               type="submit"
-              variant="gold"
-              size="lg"
-              className="w-full font-bold"
               disabled={isLoading}
+              className="w-full rounded-lg bg-black py-2.5 text-sm font-semibold text-white hover:bg-neutral-800 disabled:opacity-50 transition-colors"
             >
-              {isLoading ? 'Signing in…' : 'Sign in to admin'}
-            </Button>
+              {isLoading ? 'Signing in…' : 'Sign In to Admin'}
+            </button>
           </form>
 
-          <div className="mt-6 flex items-start gap-2 border-t border-white/10 pt-5 text-xs leading-relaxed text-slate-500">
-            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
-            <p>Administrator access is verified securely when you sign in.</p>
+          <div className="mt-6 flex items-start gap-2 border-t border-neutral-100 pt-4 text-[11px] leading-relaxed text-neutral-500">
+            <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-neutral-700" aria-hidden="true" />
+            <p>Administrator credentials are authenticated securely.</p>
           </div>
         </div>
 
         <Link
           href="/"
-          className="mx-auto mt-6 flex w-fit items-center gap-2 text-sm text-slate-400 transition-colors hover:text-white"
+          className="mx-auto mt-6 flex w-fit items-center gap-2 text-xs text-neutral-500 transition-colors hover:text-black"
         >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
           Back to store
         </Link>
       </div>

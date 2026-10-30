@@ -32,9 +32,9 @@ export function BackToTop() {
     <button
       onClick={scrollToTop}
       aria-label="Back to top"
-      className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-slate-900/90 text-white dark:bg-amber-500 dark:text-slate-950 shadow-xl backdrop-blur hover:scale-110 active:scale-95 transition-all duration-200 border border-slate-700 dark:border-amber-400 no-print"
+      className="fixed bottom-20 right-6 z-30 p-2.5 rounded-full bg-white text-[#171717] shadow-md hover:bg-[#f5f5f5] transition-colors border border-[#e5e5e5] cursor-pointer no-print"
     >
-      <ArrowUp className="w-5 h-5" />
+      <ArrowUp className="w-4 h-4" />
     </button>
   );
 }

@@ -17,25 +17,23 @@ export function NewsletterForm() {
   };
 
   return (
-    <section className="py-12 bg-slate-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-transparent to-blue-500/10 pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center">
-          <Mail className="w-6 h-6" />
+    <section className="py-12 sm:py-16 bg-white border-b border-[#e5e5e5]">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+        <div className="w-10 h-10 rounded-md bg-[#f5f5f5] text-[#171717] border border-[#e5e5e5] mx-auto flex items-center justify-center">
+          <Mail className="w-5 h-5" />
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-          Unlock 10% Off Your Next Purchase
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#171717]">
+          Subscribe to VED-HUB Updates
         </h2>
-        <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto">
-          Join 25,000+ Indian shoppers who receive our weekly curated edits of genuine inks, fashion accessories, and flash sale vouchers.
+        <p className="text-xs sm:text-sm text-[#737373] max-w-md mx-auto">
+          Get notified about new stock, essential releases, and catalog additions. Straight to your inbox, no spam.
         </p>
 
         {submitted ? (
-          <div className="p-4 rounded-2xl bg-emerald-950/80 border border-emerald-700 max-w-md mx-auto flex items-center justify-center gap-2 text-emerald-200 text-xs sm:text-sm animate-fade-in">
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-            <span>Success! Check your inbox for your welcome coupon code.</span>
+          <div className="p-4 rounded-md bg-[#f5f5f5] border border-[#e5e5e5] max-w-md mx-auto flex items-center justify-center gap-2 text-[#171717] text-xs sm:text-sm">
+            <CheckCircle2 className="w-4 h-4 text-[#171717]" />
+            <span>Thank you for subscribing to VED-HUB updates.</span>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto pt-2">
@@ -45,21 +43,21 @@ export function NewsletterForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address"
-              className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="w-full px-3.5 py-2.5 rounded-md bg-[#f5f5f5] border border-[#e5e5e5] text-xs text-[#171717] placeholder:text-[#737373] focus:border-[#171717] focus:bg-white outline-none transition-colors"
             />
             <Button
               type="submit"
-              variant="gold"
-              className="w-full sm:w-auto shrink-0 font-bold text-xs py-3 px-6"
+              variant="primary"
+              className="w-full sm:w-auto shrink-0 text-xs py-2.5 px-5 font-medium"
             >
-              Subscribe
+              <span>Subscribe</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Button>
           </form>
         )}
 
-        <p className="text-[11px] text-slate-400">
-          We respect your privacy. No spam ever. Unsubscribe at any time.
+        <p className="text-[11px] text-[#737373]">
+          You can unsubscribe anytime with one click.
         </p>
       </div>
     </section>

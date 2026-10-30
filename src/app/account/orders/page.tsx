@@ -222,12 +222,12 @@ export default function OrdersPage() {
                   : `No orders matching "${filterStatus}" status`}
               </p>
               <p className="text-xs text-slate-500 mt-1">
-                Explore genuine Brother ink bottles and accessories to place an order.
+                Explore our everyday essentials, supplies, and accessories.
               </p>
             </div>
             <div>
               <Link href="/">
-                <Button variant="gold" size="sm" className="font-bold text-xs">
+                <Button variant="primary" size="sm" className="font-medium text-xs">
                   Browse Products →
                 </Button>
               </Link>

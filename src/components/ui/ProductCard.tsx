@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Star, ShoppingBag, Eye, Heart } from 'lucide-react';
+import { ShoppingBag, Eye } from 'lucide-react';
 import { Product } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
@@ -32,125 +32,94 @@ export function ProductCard({ product }: ProductCardProps) {
     setQuickViewOpen(true);
   };
 
-  const handleWishlist = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    showToast('Saved to wishlist (demo)', 'info');
-  };
-
-  const isLowStock = product.stockCount !== undefined && product.stockCount < 25;
+  const isLowStock = product.stockCount !== undefined && product.stockCount < 10 && product.stockCount > 0;
+  const inStock = product.inStock !== false && (product.stockCount === undefined || product.stockCount > 0);
 
   return (
     <>
-      <div
-        className="group relative flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500/50 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
-      >
+      <div className="group relative flex flex-col bg-white border border-[#e5e5e5] rounded-lg overflow-hidden hover:border-[#171717] transition-colors duration-150">
         {/* Product Image Area */}
-        <div className="relative aspect-square w-full bg-slate-100 dark:bg-slate-800/80 overflow-hidden">
+        <div className="relative aspect-square w-full bg-[#f9f9f9] overflow-hidden border-b border-[#e5e5e5]">
           <Link href={`/product/${product.id}`} className="block w-full h-full">
             <img
               src={product.images[0]}
               alt={product.name}
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+              className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-200"
               loading="lazy"
             />
           </Link>
 
           {/* Badges Overlay */}
-          <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 items-start pointer-events-none">
+          <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start pointer-events-none">
             {product.badge && (
-              <Badge
-                variant={
-                  product.badge === 'Trending'
-                    ? 'gold'
-                    : product.badge === 'Sale'
-                    ? 'coral'
-                    : product.badge === 'Best Value'
-                    ? 'emerald'
-                    : 'blue'
-                }
-              >
+              <Badge variant="default" size="sm">
                 {product.badge}
               </Badge>
             )}
-            <Badge variant="demo">Demo</Badge>
+            {!inStock && (
+              <span className="px-2 py-0.5 text-[10px] uppercase font-semibold bg-[#171717] text-white rounded">
+                Out of Stock
+              </span>
+            )}
           </div>
 
-          {/* Discount Pill */}
+          {/* Discount Tag */}
           {product.discount > 0 && (
-            <div className="absolute top-2.5 right-2.5 bg-red-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow-md pointer-events-none">
+            <div className="absolute top-2.5 right-2.5 bg-[#171717] text-white text-[11px] font-medium px-2 py-0.5 rounded pointer-events-none">
               {product.discount}% OFF
             </div>
           )}
 
-          {/* Action Buttons (Quick View & Wishlist) */}
-          <div className="absolute bottom-2.5 right-2.5 flex flex-col gap-1.5 transition-all duration-300 sm:opacity-0 sm:translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 z-10">
-            <button
-              onClick={handleWishlist}
-              aria-label="Add to wishlist"
-              className="p-2 rounded-full bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:text-red-500 dark:hover:text-red-400 hover:bg-white dark:hover:bg-slate-800 shadow-md backdrop-blur-sm transition-all"
-            >
-              <Heart className="w-4 h-4" />
-            </button>
-            <button
-              onClick={handleQuickView}
-              aria-label="Quick view product"
-              className="p-2 rounded-full bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:text-amber-500 hover:bg-white dark:hover:bg-slate-800 shadow-md backdrop-blur-sm transition-all"
-            >
-              <Eye className="w-4 h-4" />
-            </button>
-          </div>
+          {/* Quick View Button */}
+          <button
+            onClick={handleQuickView}
+            aria-label="Quick view product"
+            className="absolute bottom-2.5 right-2.5 p-2 rounded bg-white text-[#171717] border border-[#e5e5e5] hover:bg-[#f5f5f5] shadow-xs transition-opacity sm:opacity-0 group-hover:opacity-100"
+          >
+            <Eye className="w-4 h-4" />
+          </button>
         </div>
 
-        {/* Product Info */}
-        <div className="p-4 flex flex-col flex-1">
-          <div className="flex items-center justify-between text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold mb-1">
-            <span>{product.category.replace('-', ' ')}</span>
-            {isLowStock ? (
-              <span className="text-amber-600 dark:text-amber-400 font-bold">
-                Only {product.stockCount} left!
-              </span>
-            ) : (
-              <span className="text-emerald-600 dark:text-emerald-400">In Stock</span>
-            )}
-          </div>
-
-          <Link href={`/product/${product.id}`} className="block group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-            <h3 className="font-semibold text-sm line-clamp-2 text-slate-900 dark:text-slate-100 leading-snug">
-              {product.name}
-            </h3>
-          </Link>
-
-          {/* Rating */}
-          <div className="flex items-center gap-1.5 mt-2">
-            <div className="flex items-center text-amber-500">
-              <Star className="w-3.5 h-3.5 fill-amber-500" />
-              <span className="text-xs font-bold text-slate-800 dark:text-slate-200 ml-1">
-                {product.rating}
-              </span>
+        {/* Product Details */}
+        <div className="p-4 flex flex-col flex-1 justify-between gap-3">
+          <div>
+            <div className="flex items-center justify-between text-[11px] text-[#737373] uppercase tracking-wide mb-1 font-medium">
+              <span>{product.category?.replace('-', ' ')}</span>
+              {isLowStock ? (
+                <span className="text-[#171717] font-medium">Only {product.stockCount} left</span>
+              ) : inStock ? (
+                <span className="text-[#737373]">In Stock</span>
+              ) : null}
             </div>
-            <span className="text-xs text-slate-400">({product.reviewCount})</span>
+
+            <Link href={`/product/${product.id}`} className="block hover:underline">
+              <h3 className="font-medium text-sm text-[#171717] line-clamp-2 leading-snug">
+                {product.name}
+              </h3>
+            </Link>
           </div>
 
-          {/* Pricing */}
-          <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-base font-bold text-slate-900 dark:text-white">
-              {formatPrice(product.price)}
-            </span>
-            <span className="text-xs text-slate-400 line-through">
-              {formatPrice(product.originalPrice)}
-            </span>
-          </div>
+          <div className="pt-2 border-t border-[#f0f0f0] flex flex-col gap-3">
+            {/* Pricing */}
+            <div className="flex items-baseline gap-2">
+              <span className="text-base font-semibold text-[#171717]">
+                {formatPrice(product.price)}
+              </span>
+              {product.originalPrice > product.price && (
+                <span className="text-xs text-[#737373] line-through">
+                  {formatPrice(product.originalPrice)}
+                </span>
+              )}
+            </div>
 
-          {/* Add to Cart Button */}
-          <div className="mt-4 pt-2">
+            {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
-              disabled={!product.inStock}
-              className="w-full py-2.5 px-3 rounded-xl bg-slate-900 dark:bg-amber-500 text-white dark:text-slate-950 font-semibold text-xs flex items-center justify-center gap-2 hover:bg-slate-800 dark:hover:bg-amber-400 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 shadow-sm"
+              disabled={!inStock}
+              className="w-full h-9 rounded bg-[#171717] hover:bg-black text-white text-xs font-medium flex items-center justify-center gap-2 disabled:bg-[#e5e5e5] disabled:text-[#737373] disabled:cursor-not-allowed transition-colors"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
-              Add to Cart
+              <span>{inStock ? 'Add to Cart' : 'Out of Stock'}</span>
             </button>
           </div>
         </div>
