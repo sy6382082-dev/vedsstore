@@ -13,6 +13,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { categories } from '@/data/categories';
+import { products as fallbackProducts } from '@/data/products';
 import { formatPrice } from '@/lib/utils';
 import { ProductCard } from '@/components/ui/ProductCard';
 import { Button } from '@/components/ui/Button';
@@ -35,9 +36,11 @@ export default function CategoryPage({ params }: PageProps) {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating'>('featured');
   const [mobileFilterOpen, setMobileFilterOpen] = useState<boolean>(false);
 
-  // Data state
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Data state with immediate fallback population
+  const [products, setProducts] = useState<Product[]>(() =>
+    fallbackProducts.filter((p) => p.category?.toLowerCase() === slug?.toLowerCase())
+  );
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchProducts = useCallback(async () => {
@@ -61,11 +64,32 @@ export default function CategoryPage({ params }: PageProps) {
       if (inStockOnly) queryParams.set('inStock', 'true');
 
       const res = await fetch(`/api/products?${queryParams.toString()}`);
-      if (!res.ok) throw new Error('Failed to fetch products');
-      const data = await res.json() as { products: Product[] };
-      setProducts(data.products ?? []);
+      if (res.ok) {
+        const data = (await res.json()) as { products: Product[] };
+        if (data.products && data.products.length > 0) {
+          setProducts(data.products);
+          return;
+        }
+      }
+
+      // Fallback filtering if DB returned empty or had an issue
+      let fallbackList = fallbackProducts.filter(
+        (p) => p.category?.toLowerCase() === slug.toLowerCase()
+      );
+      fallbackList = fallbackList.filter((p) => p.price <= maxPrice);
+      if (inStockOnly) fallbackList = fallbackList.filter((p) => p.inStock);
+      if (sortBy === 'price-asc') fallbackList.sort((a, b) => a.price - b.price);
+      else if (sortBy === 'price-desc') fallbackList.sort((a, b) => b.price - a.price);
+      else if (sortBy === 'rating') fallbackList.sort((a, b) => b.rating - a.rating);
+      setProducts(fallbackList);
     } catch {
-      setError('Could not load products. Please try again.');
+      // Gracefully preserve filtered fallback
+      let fallbackList = fallbackProducts.filter(
+        (p) => p.category?.toLowerCase() === slug.toLowerCase()
+      );
+      fallbackList = fallbackList.filter((p) => p.price <= maxPrice);
+      if (inStockOnly) fallbackList = fallbackList.filter((p) => p.inStock);
+      setProducts(fallbackList);
     } finally {
       setLoading(false);
     }

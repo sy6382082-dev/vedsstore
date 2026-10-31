@@ -185,7 +185,7 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
                   Add to Cart
                 </Button>
 
-                <Link href={`/product/${product.id}`} onClick={handleClose}>
+                <Link href={`/products/${product.slug || product.id}`} onClick={handleClose}>
                   <Button variant="outline" size="md" className="text-xs">
                     Full Details
                   </Button>

@@ -112,7 +112,7 @@ export default function CartPage() {
                         {product.category?.replace('-', ' ')}
                       </span>
                       <Link
-                        href={`/product/${product.id}`}
+                        href={`/products/${product.slug || product.id}`}
                         className="block font-medium text-sm text-[#171717] hover:underline line-clamp-1"
                       >
                         {product.name}

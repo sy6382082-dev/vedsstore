@@ -1,6 +1,6 @@
 import { Product } from '@/types';
 
-export const products: Product[] = [
+const rawProducts: Product[] = [
   // --- Brother Ink Bottles (Required) ---
   {
     id: 'brother-bt5000c',
@@ -930,3 +930,8 @@ export const products: Product[] = [
     isDemo: true,
   },
 ];
+
+export const products: Product[] = rawProducts.map((p) => ({
+  ...p,
+  slug: p.slug || p.id,
+}));

@@ -40,7 +40,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="group relative flex flex-col bg-white border border-[#e5e5e5] rounded-lg overflow-hidden hover:border-[#171717] transition-colors duration-150">
         {/* Product Image Area */}
         <div className="relative aspect-square w-full bg-[#f9f9f9] overflow-hidden border-b border-[#e5e5e5]">
-          <Link href={`/product/${product.id}`} className="block w-full h-full">
+          <Link href={`/products/${product.slug || product.id}`} className="block w-full h-full">
             <img
               src={product.images[0]}
               alt={product.name}
@@ -92,7 +92,7 @@ export function ProductCard({ product }: ProductCardProps) {
               ) : null}
             </div>
 
-            <Link href={`/product/${product.id}`} className="block hover:underline">
+            <Link href={`/products/${product.slug || product.id}`} className="block hover:underline">
               <h3 className="font-medium text-sm text-[#171717] line-clamp-2 leading-snug">
                 {product.name}
               </h3>
@@ -112,15 +112,24 @@ export function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
 
-            {/* Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              disabled={!inStock}
-              className="w-full h-9 rounded bg-[#171717] hover:bg-black text-white text-xs font-medium flex items-center justify-center gap-2 disabled:bg-[#e5e5e5] disabled:text-[#737373] disabled:cursor-not-allowed transition-colors"
-            >
-              <ShoppingBag className="w-3.5 h-3.5" />
-              <span>{inStock ? 'Add to Cart' : 'Out of Stock'}</span>
-            </button>
+            {/* Actions: View Details & Add to Cart */}
+            <div className="flex items-center gap-2">
+              <Link
+                href={`/products/${product.slug || product.id}`}
+                className="flex-1 h-9 rounded border border-[#e5e5e5] hover:border-[#171717] text-[#171717] text-xs font-medium flex items-center justify-center transition-colors text-center"
+              >
+                View Details
+              </Link>
+              <button
+                onClick={handleAddToCart}
+                disabled={!inStock}
+                aria-label={`Add ${product.name} to cart`}
+                className="flex-1 h-9 rounded bg-[#171717] hover:bg-black text-white text-xs font-medium flex items-center justify-center gap-1.5 disabled:bg-[#e5e5e5] disabled:text-[#737373] disabled:cursor-not-allowed transition-colors cursor-pointer"
+              >
+                <ShoppingBag className="w-3.5 h-3.5" />
+                <span>{inStock ? 'Add to Cart' : 'Out of Stock'}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,18 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { products as fallbackProducts } from '@/data/products';
 
 export async function GET(req: NextRequest) {
-  try {
-    const { searchParams } = new URL(req.url);
-    const category = searchParams.get('category');
-    const q = searchParams.get('q');
-    const featured = searchParams.get('featured');
-    const sort = searchParams.get('sort') ?? 'createdAt';
-    const order = searchParams.get('order') ?? 'desc';
-    const minPrice = searchParams.get('minPrice');
-    const maxPrice = searchParams.get('maxPrice');
-    const inStock = searchParams.get('inStock');
+  const { searchParams } = new URL(req.url);
+  const category = searchParams.get('category');
+  const q = searchParams.get('q');
+  const featured = searchParams.get('featured');
+  const sort = searchParams.get('sort') ?? 'createdAt';
+  const order = searchParams.get('order') ?? 'desc';
+  const minPrice = searchParams.get('minPrice');
+  const maxPrice = searchParams.get('maxPrice');
+  const inStock = searchParams.get('inStock');
 
+  try {
     // Build where clause
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: Record<string, any> = {
@@ -21,9 +22,29 @@ export async function GET(req: NextRequest) {
     };
 
     if (category) {
-      const cat = await prisma.category.findUnique({ where: { slug: category } });
-      if (cat) where.categoryId = cat.id;
-      else return NextResponse.json({ products: [] });
+      const cleanSlug = category.toLowerCase().trim();
+      const cat = await prisma.category.findFirst({
+        where: {
+          OR: [
+            { slug: cleanSlug },
+            { id: category },
+            { name: { equals: cleanSlug } },
+          ],
+        },
+      });
+
+      if (cat) {
+        where.categoryId = cat.id;
+      } else {
+        // Fallback to static catalog if category not yet in DB
+        let filtered = fallbackProducts.filter(
+          (p) => p.category?.toLowerCase() === cleanSlug
+        );
+        if (minPrice) filtered = filtered.filter((p) => p.price >= parseFloat(minPrice));
+        if (maxPrice) filtered = filtered.filter((p) => p.price <= parseFloat(maxPrice));
+        if (inStock === 'true') filtered = filtered.filter((p) => p.inStock);
+        return NextResponse.json({ products: filtered });
+      }
     }
 
     if (featured === 'true') where.featured = true;
@@ -84,6 +105,7 @@ export async function GET(req: NextRequest) {
 
       return {
         ...p,
+        slug: p.slug || p.id,
         category: p.category.slug,
         price: p.price / 100,
         originalPrice: p.originalPrice / 100,
@@ -99,8 +121,25 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ products });
   } catch (error) {
-    console.error('[GET /api/products]', error);
-    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+    console.error('[GET /api/products] Falling back to static catalog:', error);
+    let filtered = [...fallbackProducts];
+    if (category) {
+      const cleanSlug = category.toLowerCase().trim();
+      filtered = filtered.filter((p) => p.category?.toLowerCase() === cleanSlug);
+    }
+    if (featured === 'true') {
+      filtered = filtered.filter((p) => p.featured);
+    }
+    if (minPrice) {
+      filtered = filtered.filter((p) => p.price >= parseFloat(minPrice));
+    }
+    if (maxPrice) {
+      filtered = filtered.filter((p) => p.price <= parseFloat(maxPrice));
+    }
+    if (inStock === 'true') {
+      filtered = filtered.filter((p) => p.inStock);
+    }
+    return NextResponse.json({ products: filtered });
   }
 }
 

@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { products as fallbackProducts } from '@/data/products';
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  try {
-    const { id } = await params;
+  const { id } = await params;
 
+  try {
     const product = await prisma.product.findFirst({
       where: {
         OR: [{ id }, { slug: id }],
@@ -27,6 +28,15 @@ export async function GET(
     });
 
     if (!product) {
+      const fallback = fallbackProducts.find((p) => p.id === id || p.slug === id);
+      if (fallback) {
+        return NextResponse.json({
+          product: {
+            ...fallback,
+            slug: fallback.slug || fallback.id,
+          },
+        });
+      }
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
@@ -73,6 +83,7 @@ export async function GET(
     return NextResponse.json({
       product: {
         ...product,
+        slug: product.slug || product.id,
         category: product.category.slug,
         price: product.price / 100,
         originalPrice: product.originalPrice / 100,
@@ -85,7 +96,16 @@ export async function GET(
       },
     });
   } catch (err) {
-    console.error('[GET /api/products/[id]]', err);
+    console.error('[GET /api/products/[id]] Error, checking fallback catalog:', err);
+    const fallback = fallbackProducts.find((p) => p.id === id || p.slug === id);
+    if (fallback) {
+      return NextResponse.json({
+        product: {
+          ...fallback,
+          slug: fallback.slug || fallback.id,
+        },
+      });
+    }
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

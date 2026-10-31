@@ -269,7 +269,113 @@ async function main() {
     }
   }
 
-  console.log('✅ Successfully imported all records into PostgreSQL!');
+  // 9. Carts & Cart Items
+  if (data.carts && data.carts.length > 0) {
+    console.log(`⏳ Importing ${data.carts.length} carts...`);
+    for (const c of data.carts) {
+      await prisma.cart.upsert({
+        where: { id: c.id },
+        create: {
+          id: c.id,
+          userId: c.userId,
+          createdAt: new Date(c.createdAt),
+          updatedAt: new Date(c.updatedAt),
+        },
+        update: {},
+      });
+    }
+  }
+
+  if (data.cartItems && data.cartItems.length > 0) {
+    console.log(`⏳ Importing ${data.cartItems.length} cart items...`);
+    for (const ci of data.cartItems) {
+      await prisma.cartItem.upsert({
+        where: { id: ci.id },
+        create: {
+          id: ci.id,
+          cartId: ci.cartId,
+          productId: ci.productId,
+          quantity: ci.quantity,
+          addedAt: new Date(ci.addedAt),
+        },
+        update: {
+          quantity: ci.quantity,
+        },
+      });
+    }
+  }
+
+  // 10. Wishlists & Wishlist Items
+  if (data.wishlists && data.wishlists.length > 0) {
+    console.log(`⏳ Importing ${data.wishlists.length} wishlists...`);
+    for (const w of data.wishlists) {
+      await prisma.wishlist.upsert({
+        where: { id: w.id },
+        create: {
+          id: w.id,
+          userId: w.userId,
+          createdAt: new Date(w.createdAt),
+          updatedAt: new Date(w.updatedAt),
+        },
+        update: {},
+      });
+    }
+  }
+
+  if (data.wishlistItems && data.wishlistItems.length > 0) {
+    console.log(`⏳ Importing ${data.wishlistItems.length} wishlist items...`);
+    for (const wi of data.wishlistItems) {
+      await prisma.wishlistItem.upsert({
+        where: { id: wi.id },
+        create: {
+          id: wi.id,
+          wishlistId: wi.wishlistId,
+          productId: wi.productId,
+          addedAt: new Date(wi.addedAt),
+        },
+        update: {},
+      });
+    }
+  }
+
+  // 11. Post-migration verification
+  console.log('\n📊 Validating PostgreSQL record counts:');
+  const [
+    pgUsers,
+    pgProfiles,
+    pgAddresses,
+    pgCategories,
+    pgProducts,
+    pgBundleItems,
+    pgInventory,
+    pgOrders,
+    pgOrderItems,
+    pgCarts,
+  ] = await Promise.all([
+    prisma.user.count(),
+    prisma.profile.count(),
+    prisma.address.count(),
+    prisma.category.count(),
+    prisma.product.count(),
+    prisma.bundleItem.count(),
+    prisma.inventory.count(),
+    prisma.order.count(),
+    prisma.orderItem.count(),
+    prisma.cart.count(),
+  ]);
+
+  console.log(`   - Users:        ${pgUsers} (Expected: ${data.users.length})`);
+  console.log(`   - Profiles:     ${pgProfiles} (Expected: ${data.profiles.length})`);
+  console.log(`   - Addresses:    ${pgAddresses} (Expected: ${data.addresses.length})`);
+  console.log(`   - Categories:   ${pgCategories} (Expected: ${data.categories.length})`);
+  console.log(`   - Products:     ${pgProducts} (Expected: ${data.products.length})`);
+  console.log(`   - Bundle Items: ${pgBundleItems} (Expected: ${data.bundleItems?.length || 0})`);
+  console.log(`   - Inventory:    ${pgInventory} (Expected: ${data.inventory.length})`);
+  console.log(`   - Orders:       ${pgOrders} (Expected: ${data.orders.length})`);
+  console.log(`   - Order Items:  ${pgOrderItems} (Expected: ${data.orderItems?.length || 0})`);
+  console.log(`   - Carts:        ${pgCarts} (Expected: ${data.carts?.length || 0})`);
+
+  console.log('\n✅ Successfully imported and verified all records into PostgreSQL!');
 }
 
 main()

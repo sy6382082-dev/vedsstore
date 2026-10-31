@@ -28,6 +28,24 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CART_STORAGE_KEY = 'brother_cart';
 
+// Safe product identifier matching that NEVER treats undefined as equal
+function isSameProduct(a: Product, b: Product): boolean {
+  if (a.id && b.id && a.id === b.id) return true;
+  if (a.sku && b.sku && a.sku === b.sku) return true;
+  if (a.slug && b.slug && a.slug === b.slug) return true;
+  if (a.slug && b.id && a.slug === b.id) return true;
+  if (a.id && b.slug && a.id === b.slug) return true;
+  return false;
+}
+
+function matchesProductIdentifier(product: Product, idOrSlug: string): boolean {
+  if (!idOrSlug) return false;
+  if (product.id && product.id === idOrSlug) return true;
+  if (product.slug && product.slug === idOrSlug) return true;
+  if (product.sku && product.sku === idOrSlug) return true;
+  return false;
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const { user, isAuthenticated } = useAuth();
   const [items, setItems] = useState<CartItem[]>([]);
@@ -47,7 +65,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          setItems(parsed);
+          // Normalize items on load so each item has a defined slug
+          const normalized = parsed.map((item: CartItem) => ({
+            ...item,
+            product: {
+              ...item.product,
+              slug: item.product.slug || item.product.id,
+            },
+          }));
+          setItems(normalized);
         }
       }
     } catch (e) {
@@ -136,35 +162,53 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [isAuthenticated]);
 
   const addToCart = (product: Product, quantity = 1) => {
+    const normalizedProduct: Product = {
+      ...product,
+      slug: product.slug || product.id,
+    };
+
     setItems((prevItems) => {
-      const existingIndex = prevItems.findIndex(
-        (item) => item.product.id === product.id || item.product.slug === product.slug
+      const existingIndex = prevItems.findIndex((item) =>
+        isSameProduct(item.product, normalizedProduct)
       );
+
       let updated: CartItem[];
-      const maxStock = product.stockCount ?? 10;
+      const maxStock = normalizedProduct.stockCount ?? 10;
+
       if (existingIndex > -1) {
-        updated = [...prevItems];
-        const newQty = updated[existingIndex].quantity + quantity;
-        updated[existingIndex] = {
-          ...updated[existingIndex],
-          quantity: Math.min(newQty, maxStock),
-        };
+        // Increment quantity of existing item immutably
+        updated = prevItems.map((item, idx) => {
+          if (idx === existingIndex) {
+            const newQty = item.quantity + quantity;
+            return {
+              ...item,
+              quantity: Math.min(newQty, maxStock),
+            };
+          }
+          return item;
+        });
       } else {
+        // Append brand new distinct item immutably
         updated = [
           ...prevItems,
-          { product, quantity: Math.min(quantity, maxStock) },
+          {
+            product: normalizedProduct,
+            quantity: Math.min(quantity, maxStock),
+          },
         ];
       }
+
       syncToServer(updated);
       return updated;
     });
+
     setIsCartOpen(true);
   };
 
   const removeFromCart = (productId: string) => {
     setItems((prevItems) => {
       const updated = prevItems.filter(
-        (item) => item.product.id !== productId && item.product.slug !== productId
+        (item) => !matchesProductIdentifier(item.product, productId)
       );
       syncToServer(updated);
       return updated;
@@ -178,7 +222,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
     setItems((prevItems) => {
       const updated = prevItems.map((item) => {
-        if (item.product.id === productId || item.product.slug === productId) {
+        if (matchesProductIdentifier(item.product, productId)) {
           const maxStock = item.product.stockCount ?? 10;
           return {
             ...item,

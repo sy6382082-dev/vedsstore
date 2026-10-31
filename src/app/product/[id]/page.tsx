@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import {
   ChevronRight,
   ShoppingBag,
@@ -33,6 +33,7 @@ interface PageProps {
 export default function ProductDetailPage({ params }: PageProps) {
   const unwrappedParams = use(params);
   const productId = unwrappedParams.id;
+  const router = useRouter();
 
   const { addToCart } = useCart();
   const { user } = useAuth();
@@ -98,6 +99,12 @@ export default function ProductDetailPage({ params }: PageProps) {
     if (!product) return;
     addToCart(product, quantity);
     showToast(`Added ${quantity} × ${product.name} to cart`, 'success');
+  };
+
+  const handleBuyNow = () => {
+    if (!product || !inStock) return;
+    addToCart(product, quantity);
+    router.push('/checkout');
   };
 
   const handleWishlist = async () => {
@@ -306,6 +313,48 @@ export default function ProductDetailPage({ params }: PageProps) {
               <p className="text-xs sm:text-sm text-[#171717] leading-relaxed">{product.description}</p>
             </div>
 
+            {/* Quick Specs Highlight (Color, Model, Capacity, Yield, Material) */}
+            {product.specifications && (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 bg-[#fafafa] rounded-lg border border-[#e5e5e5] text-xs">
+                {product.specifications['Ink Color'] && (
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#737373] block">Color</span>
+                    <span className="font-semibold text-[#171717]">{product.specifications['Ink Color']}</span>
+                  </div>
+                )}
+                {product.specifications['Model Number'] && (
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#737373] block">Model</span>
+                    <span className="font-semibold text-[#171717]">{product.specifications['Model Number']}</span>
+                  </div>
+                )}
+                {product.specifications['Volume'] && (
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#737373] block">Capacity</span>
+                    <span className="font-semibold text-[#171717]">{product.specifications['Volume']}</span>
+                  </div>
+                )}
+                {product.specifications['Yield'] && (
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#737373] block">Page Yield</span>
+                    <span className="font-semibold text-[#171717]">{product.specifications['Yield']}</span>
+                  </div>
+                )}
+                {product.specifications['Material'] && !product.specifications['Ink Color'] && (
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#737373] block">Material</span>
+                    <span className="font-semibold text-[#171717]">{product.specifications['Material']}</span>
+                  </div>
+                )}
+                {product.specifications['Style'] && !product.specifications['Model Number'] && (
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-[#737373] block">Style</span>
+                    <span className="font-semibold text-[#171717]">{product.specifications['Style']}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Bundle Components Breakdown */}
             {product.bundleComponents && product.bundleComponents.length > 0 && (
               <div className="p-4 rounded-lg bg-[#fafafa] border border-[#e5e5e5] space-y-3">
@@ -382,6 +431,15 @@ export default function ProductDetailPage({ params }: PageProps) {
                 >
                   <ShoppingBag className="w-4 h-4 mr-2" />
                   <span>{inStock ? `Add to Cart • ${formatPrice(product.price * quantity)}` : 'Out of Stock'}</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="md"
+                  className="sm:w-auto font-medium text-xs h-10 border-[#171717] text-[#171717] hover:bg-[#fafafa]"
+                  onClick={handleBuyNow}
+                  disabled={!inStock}
+                >
+                  <span>Buy Now</span>
                 </Button>
                 <Button
                   variant="outline"

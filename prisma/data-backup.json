@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "exportedAt": "2026-10-31T04:41:14.709Z",
+    "exportedAt": "2026-10-31T06:28:18.421Z",
     "source": "SQLite (prisma/dev.db)",
     "recordCounts": {
-      "users": 10,
-      "profiles": 10,
+      "users": 13,
+      "profiles": 13,
       "addresses": 11,
       "categories": 3,
       "products": 25,
@@ -118,6 +118,36 @@
       "emailVerified": true,
       "createdAt": "2026-10-30T20:20:53.278Z",
       "updatedAt": "2026-10-30T20:20:53.278Z"
+    },
+    {
+      "id": "cmvvxlz19000011mulrogsllc",
+      "email": "auth_test_1793422765967@ved-hub.in",
+      "phone": "9876543210",
+      "passwordHash": "$2b$12$405deigfPuXieqf/sfpSxe09mzOfNxmm1tH9apXWA9aPBpr6bTYc6",
+      "role": "CUSTOMER",
+      "emailVerified": true,
+      "createdAt": "2026-10-31T04:59:26.493Z",
+      "updatedAt": "2026-10-31T04:59:26.493Z"
+    },
+    {
+      "id": "cmvvxmjlh000411muiygexdrw",
+      "email": "auth_test_1793422792115@ved-hub.in",
+      "phone": null,
+      "passwordHash": "$2b$12$5Luhf8Z5dmoJHkX.Cdncvuky1wAK8gdMHGlmvqXq07oYmEmXnW8mu",
+      "role": "CUSTOMER",
+      "emailVerified": true,
+      "createdAt": "2026-10-31T04:59:53.141Z",
+      "updatedAt": "2026-10-31T04:59:53.141Z"
+    },
+    {
+      "id": "cmvvxocki000011k72alafxxd",
+      "email": "auth_test_1793422876741@ved-hub.in",
+      "phone": "9167891571",
+      "passwordHash": "$2b$12$..L741YRmzWplm8E3km2X..GDAF4zPWY7OgpG1oJTVpGCYIKhq2mW",
+      "role": "CUSTOMER",
+      "emailVerified": true,
+      "createdAt": "2026-10-31T05:01:17.346Z",
+      "updatedAt": "2026-10-31T05:01:17.346Z"
     }
   ],
   "profiles": [
@@ -210,6 +240,33 @@
       "avatarUrl": null,
       "createdAt": "2026-10-30T20:20:53.278Z",
       "updatedAt": "2026-10-30T20:20:53.278Z"
+    },
+    {
+      "id": "cmvvxlz19000111muwwzswizg",
+      "userId": "cmvvxlz19000011mulrogsllc",
+      "firstName": "Test",
+      "lastName": "Customer",
+      "avatarUrl": null,
+      "createdAt": "2026-10-31T04:59:26.493Z",
+      "updatedAt": "2026-10-31T04:59:26.493Z"
+    },
+    {
+      "id": "cmvvxmjlh000511mue14emnrx",
+      "userId": "cmvvxmjlh000411muiygexdrw",
+      "firstName": "Duplicate",
+      "lastName": "User",
+      "avatarUrl": null,
+      "createdAt": "2026-10-31T04:59:53.141Z",
+      "updatedAt": "2026-10-31T04:59:53.141Z"
+    },
+    {
+      "id": "cmvvxocki000111k7lc7oavys",
+      "userId": "cmvvxocki000011k72alafxxd",
+      "firstName": "Test",
+      "lastName": "Customer",
+      "avatarUrl": null,
+      "createdAt": "2026-10-31T05:01:17.346Z",
+      "updatedAt": "2026-10-31T05:01:17.346Z"
     }
   ],
   "addresses": [

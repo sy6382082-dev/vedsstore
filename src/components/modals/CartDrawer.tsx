@@ -108,7 +108,7 @@ export function CartDrawer() {
                   />
                   <div className="flex-1 min-w-0">
                     <Link
-                      href={`/product/${product.id}`}
+                      href={`/products/${product.slug || product.id}`}
                       onClick={closeCart}
                       className="font-medium text-xs sm:text-sm text-[#171717] line-clamp-1 hover:underline"
                     >
