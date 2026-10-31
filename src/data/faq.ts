@@ -20,14 +20,21 @@ export const faqItems: FAQItem[] = [
     category: 'Returns',
     question: 'What is your return and replacement policy?',
     answer:
-      'We provide a straightforward 30-day return policy for unused products in their original packaging with tags intact. Printer ink bottles must remain factory sealed with holographic foil intact for returns. Jewellery can be exchanged if sized incorrectly.',
+      'We offer a transparent 7-day return policy. Customers can request a return or replacement within 7 calendar days of receiving their order (counted from the actual delivery date, not the order date). Products must be unused, undamaged, and returned with all original packaging, tags, accessories, and invoice intact. Printer ink bottles must remain factory sealed with holographic security seals untampered. Items received damaged, defective, or incorrectly delivered are eligible for a free replacement or return after verification.',
   },
   {
     id: 'faq-4',
     category: 'Returns',
-    question: 'How do refunds get processed?',
+    question: 'How do refunds get processed and what is the timeline?',
     answer:
-      'Once the returned item passes quality inspection, refunds are credited back to the original payment method within 3-5 business days.',
+      'Refunds are processed only after the returned product is physically received and inspected by our verification team. Once approved, the refund is sent back to your original payment method (via Razorpay for UPI/Cards/Netbanking). Refunds typically reflect within 5 to 7 business days, depending on your bank or payment issuer.',
+  },
+  {
+    id: 'faq-3b',
+    category: 'Returns',
+    question: 'How do I request a return or report a damaged item?',
+    answer:
+      'To request a return within the 7-day window, email support@ved-hub.in or call +91 98765 43210 (Mon - Sat: 9:00 AM - 8:00 PM IST) with your Order ID, description of the issue, and clear photos of the product and outer packaging. Our team will verify your request and arrange the return pickup.',
   },
   {
     id: 'faq-5',

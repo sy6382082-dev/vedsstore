@@ -109,3 +109,27 @@ try {
   process.exit(1);
 }
 
+// 6. Automatically synchronize PostgreSQL schema if deployed with real database connection
+const isRealPgConnection =
+  isPostgres &&
+  databaseUrl &&
+  !databaseUrl.includes('localhost') &&
+  !databaseUrl.includes('127.0.0.1') &&
+  !databaseUrl.includes('dummy');
+
+if (isRealPgConnection) {
+  console.log(`[Prisma-Prepare] Synchronizing PostgreSQL database tables...`);
+  try {
+    execSync('npx prisma db push --schema=prisma/schema.postgresql.prisma --skip-generate --accept-data-loss', {
+      cwd: rootDir,
+      stdio: 'inherit',
+      env: {
+        ...process.env,
+        DATABASE_URL: databaseUrl,
+      },
+    });
+    console.log(`[Prisma-Prepare] PostgreSQL database tables successfully synchronized!`);
+  } catch (err) {
+    console.warn(`[Prisma-Prepare] Note: Database synchronization could not run during build (may require network access at runtime).`, err.message);
+  }
+}

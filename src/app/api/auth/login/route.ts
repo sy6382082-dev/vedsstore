@@ -7,7 +7,7 @@ import { checkRateLimit, resetRateLimit } from '@/lib/rate-limit';
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json() as { email?: string; password?: string; adminOnly?: boolean };
+    const body = (await req.json()) as { email?: string; password?: string; adminOnly?: boolean };
     const { email, password } = body;
 
     if (typeof email !== 'string' || typeof password !== 'string') {
@@ -72,7 +72,33 @@ export async function POST(req: NextRequest) {
     response.cookies.set(opts.name, token, opts);
     return response;
   } catch (error) {
-    console.error('[POST /api/auth/login]', error);
+    const err = error as { code?: string; name?: string; message?: string };
+    console.error('[POST /api/auth/login] Auth failure:', {
+      name: err.name,
+      code: err.code,
+      message: err.message,
+    });
+
+    // Provide safe, informative messages for database/infrastructure issues
+    if (err.code === 'P2021') {
+      return NextResponse.json(
+        { error: 'Database tables are not initialized. Please run database setup.' },
+        { status: 503 },
+      );
+    }
+
+    if (
+      err.name === 'PrismaClientInitializationError' ||
+      err.code === 'P1001' ||
+      err.code === 'P1000' ||
+      err.code === 'P1002'
+    ) {
+      return NextResponse.json(
+        { error: 'Database service is currently unreachable. Please check connection settings.' },
+        { status: 503 },
+      );
+    }
+
     return NextResponse.json({ error: 'Login failed. Please try again.' }, { status: 500 });
   }
 }

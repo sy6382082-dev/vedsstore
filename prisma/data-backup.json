@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "exportedAt": "2026-10-30T20:17:29.550Z",
+    "exportedAt": "2026-10-31T04:41:14.709Z",
     "source": "SQLite (prisma/dev.db)",
     "recordCounts": {
-      "users": 9,
-      "profiles": 9,
+      "users": 10,
+      "profiles": 10,
       "addresses": 11,
       "categories": 3,
       "products": 25,
@@ -108,6 +108,16 @@
       "emailVerified": true,
       "createdAt": "2026-10-30T16:08:02.349Z",
       "updatedAt": "2026-10-30T16:08:02.349Z"
+    },
+    {
+      "id": "cmvvf33xa0000ohabe4xy8qcu",
+      "email": "tester_1793391652671@example.com",
+      "phone": null,
+      "passwordHash": "$2b$12$mP3/53/gHpP.aVGgecm1M.6mCpSnkKnONA1k22oUf70LXxxM2jIku",
+      "role": "CUSTOMER",
+      "emailVerified": true,
+      "createdAt": "2026-10-30T20:20:53.278Z",
+      "updatedAt": "2026-10-30T20:20:53.278Z"
     }
   ],
   "profiles": [
@@ -191,6 +201,15 @@
       "avatarUrl": null,
       "createdAt": "2026-10-30T16:08:02.349Z",
       "updatedAt": "2026-10-30T16:08:02.349Z"
+    },
+    {
+      "id": "cmvvf33xa0001ohabnu16u8cq",
+      "userId": "cmvvf33xa0000ohabe4xy8qcu",
+      "firstName": "Test",
+      "lastName": "User",
+      "avatarUrl": null,
+      "createdAt": "2026-10-30T20:20:53.278Z",
+      "updatedAt": "2026-10-30T20:20:53.278Z"
     }
   ],
   "addresses": [

@@ -60,7 +60,7 @@ export function HeroBanner() {
               </div>
               <div className="flex items-center gap-2">
                 <RotateCcw className="w-4 h-4 text-[#171717] shrink-0" />
-                <span>Hassle-free 30-day returns</span>
+                <span>Hassle-free 7-day returns</span>
               </div>
             </div>
           </div>

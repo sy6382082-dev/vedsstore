@@ -239,7 +239,7 @@ export default function CartPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <RotateCcw className="w-3.5 h-3.5 text-[#171717] shrink-0" />
-                  <span>30-Day Return Guarantee</span>
+                  <span>7-Day Return Guarantee (From Delivery)</span>
                 </div>
               </div>
             </div>

@@ -12,6 +12,7 @@ import {
   ShoppingBag,
   Loader2,
   AlertCircle,
+  RotateCcw,
 } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
@@ -308,6 +309,24 @@ export default function OrderConfirmationPage() {
               </span>
             </div>
           </div>
+        </div>
+
+        {/* 7-Day Return Policy & Support Banner */}
+        <div className="bg-[#fafafa] rounded-lg p-4 sm:p-5 border border-[#e5e5e5] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="space-y-1">
+            <span className="font-semibold text-[#171717] flex items-center gap-1.5">
+              <RotateCcw className="w-3.5 h-3.5 text-[#171717]" /> 7-Day Return &amp; Replacement Guarantee
+            </span>
+            <p className="text-[#737373]">
+              Need assistance with your delivered items? You can request a return or replacement within 7 calendar days of delivery.
+            </p>
+          </div>
+          <Link
+            href="/return-policy"
+            className="text-xs font-medium text-[#171717] underline hover:no-underline shrink-0"
+          >
+            View Return Policy &rarr;
+          </Link>
         </div>
       </div>
     </div>

@@ -90,9 +90,9 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#faq-section" className="hover:text-[#171717] transition-colors">
-                  Returns &amp; Replacements
-                </a>
+                <Link href="/return-policy" className="hover:text-[#171717] transition-colors">
+                  Returns &amp; Refund Policy (7 Days)
+                </Link>
               </li>
               <li>
                 <a href="#contact-section" className="hover:text-[#171717] transition-colors">

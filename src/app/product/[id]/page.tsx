@@ -400,7 +400,7 @@ export default function ProductDetailPage({ params }: PageProps) {
             <div className="grid grid-cols-3 gap-2.5 pt-1">
               {[
                 { Icon: Truck, title: 'Express Delivery', sub: 'Orders over ₹499' },
-                { Icon: RotateCcw, title: '30-Day Returns', sub: 'Original packaging' },
+                { Icon: RotateCcw, title: '7-Day Returns', sub: 'From delivery date' },
                 { Icon: ShieldCheck, title: '100% Genuine', sub: 'Quality assured' },
               ].map(({ Icon, title, sub }) => (
                 <div key={title} className="p-3 rounded-lg bg-[#fafafa] border border-[#e5e5e5] text-center">

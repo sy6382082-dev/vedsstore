@@ -1005,12 +1005,17 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div className="p-3 rounded-md bg-white border border-[#e5e5e5] text-[11px] text-[#737373] space-y-1">
-                  <div className="font-medium text-[#171717] flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#171717]" /> VED-HUB Order Guarantee
+                <div className="p-3 rounded-md bg-white border border-[#e5e5e5] text-[11px] text-[#737373] space-y-1.5">
+                  <div className="font-medium text-[#171717] flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#171717]" /> VED-HUB Order Guarantee
+                    </span>
+                    <span className="text-[10px] text-[#171717] bg-[#f5f5f5] px-1.5 py-0.5 rounded border border-[#e5e5e5]">
+                      7-Day Returns
+                    </span>
                   </div>
                   <p>
-                    Authentic items with complete support. Payments encrypted via Razorpay with server-side validation.
+                    Authentic items with complete support. Eligible for returns within 7 calendar days of delivery. Payments secured via Razorpay.
                   </p>
                 </div>
 

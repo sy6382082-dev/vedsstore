@@ -13,8 +13,8 @@ export function PromoSection() {
     },
     {
       icon: <RotateCcw className="w-5 h-5 text-[#171717]" />,
-      title: '30-Day Returns',
-      description: 'Straightforward return policy on eligible original-packaged items.',
+      title: '7-Day Returns',
+      description: 'Request a return within 7 calendar days of delivery for eligible items.',
     },
     {
       icon: <ShieldCheck className="w-5 h-5 text-[#171717]" />,

@@ -349,6 +349,32 @@ export default function OrdersPage() {
                         </div>
                       </div>
 
+                      {/* 7-Day Return Policy Notice */}
+                      <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <RotateCcw className="w-4 h-4 text-slate-700 dark:text-slate-300 shrink-0" />
+                          <span>
+                            <strong>7-Day Return Policy:</strong> Returns can be requested within 7 calendar days of delivery.
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
+                          <Link
+                            href="/return-policy"
+                            className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            Read Policy
+                          </Link>
+                          {order.status === 'delivered' && (
+                            <a
+                              href={`mailto:support@ved-hub.in?subject=Return%20Request%20-%20Order%20%23${order.orderNumber}`}
+                              className="px-2.5 py-1 rounded-lg bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-[11px] font-medium hover:opacity-90 transition-opacity"
+                            >
+                              Request Return
+                            </a>
+                          )}
+                        </div>
+                      </div>
+
                       {/* Financial Detail Breakdown */}
                       <div className="space-y-1.5 text-xs text-slate-500 max-w-xs ml-auto pt-1">
                         <div className="flex justify-between">

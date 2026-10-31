@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const body = await req.json() as Record<string, string>;
+    const body = (await req.json()) as Record<string, string>;
     const { email, password, phone, firstName, lastName } = body;
 
     const emailErr = validateEmail(email);
@@ -46,7 +46,6 @@ export async function POST(req: NextRequest) {
         email: email.toLowerCase().trim(),
         phone: phone?.replace(/[\s\-()]/g, '') || null,
         passwordHash,
-        // Dev mode: auto-verify. Production: send verification email & set false
         emailVerified: true,
         profile: {
           create: {
@@ -68,8 +67,39 @@ export async function POST(req: NextRequest) {
     response.cookies.set(opts.name, token, opts);
     return response;
   } catch (error) {
-    console.error('[POST /api/auth/register]', error);
+    const err = error as { code?: string; name?: string; message?: string };
+    console.error('[POST /api/auth/register] Registration failure:', {
+      name: err.name,
+      code: err.code,
+      message: err.message,
+    });
+
+    if (err.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'An account with this email or phone number already exists.' },
+        { status: 409 },
+      );
+    }
+
+    if (err.code === 'P2021') {
+      return NextResponse.json(
+        { error: 'Database schema is not initialized. Please run database setup.' },
+        { status: 503 },
+      );
+    }
+
+    if (
+      err.name === 'PrismaClientInitializationError' ||
+      err.code === 'P1001' ||
+      err.code === 'P1000' ||
+      err.code === 'P1002'
+    ) {
+      return NextResponse.json(
+        { error: 'Database service is currently unreachable. Please check connection settings.' },
+        { status: 503 },
+      );
+    }
+
     return NextResponse.json({ error: 'Registration failed. Please try again.' }, { status: 500 });
   }
 }
-
